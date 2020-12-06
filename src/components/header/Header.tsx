@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from "../common/Logo";
-import BookingButton from "../common/BookingButton";
+import MyButton from "../common/myButton";
 import Menu from "./Menu";
 
 const Header = () => {
@@ -8,7 +8,7 @@ const Header = () => {
         <div className="header">
             <Logo />
             <div className="actionMenu">
-                <BookingButton />
+                <MyButton content="ЗАПИСАТЬСЯ" path="/booking"/>
                 <Menu />
             </div>
         </div>

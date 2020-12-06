@@ -55,6 +55,7 @@ const SocialMediaIcon = (props: {
                 src={color ? props.nameColor : props.nameWhite}
                 style={color ? { borderRadius: "50%", backgroundColor: props.svgColor } : {}}
                 className="socialIcon"
+                alt="socialMedia"
             />
         </IconButton>
     );
