@@ -1,0 +1,150 @@
+.App {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        'header'
+        'body'
+        'footer';
+}
+
+/*HEADER*/
+.header {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 10vh;
+    background-color: var(--secondBG);
+    max-width: 100vw;
+}
+
+.header > div, .header > a {
+    margin: 0 1rem;
+}
+
+.actionMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo > div:first-child {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.logo img {
+    height: 80%;
+    border-radius: 50%;
+}
+
+.logoLabel {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoLabel p {
+    line-height: 90%;
+    font-weight: 600;
+}
+
+.logoLabel p:first-child {
+    /*font-size: 3.5rem;*/
+    font-size: 5vh;
+}
+
+.logoLabel p:last-child {
+    /*font-size: 2.3rem;*/
+    font-size: 3.4vh;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab {
+    color: var(--secondText);
+    font-size: 3vh;
+}
+
+.tab:hover {
+    color: var(--buttonBG);
+}
+
+@media (max-width: 610px) {
+    .actionMenu > a {
+        display: none;
+    }
+}
+
+/*MAIN CONTENT*/
+.mainContent {
+    grid-area: body;
+}
+
+/*FOOTER*/
+.footer {
+    min-height: 10vh;
+    grid-area: footer;
+    background-color: var(--secondBG);
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.siteMap, .socialMedia {
+    margin: 0 1vw;
+}
+
+.siteMap {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.siteMap .tab {
+    font-size: 1.8vw;
+    margin: 0 1rem;
+    line-height: 80%;
+}
+
+.socialMedia {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.socialIcon {
+    width: 4.5vw;
+}
+
+@media (max-width: 630px) {
+    .siteMap {
+        display: none;
+    }
+
+    .socialMedia {
+        width: 100%;
+    }
+
+    .socialIcon {
+        width: 10vw;
+    }
+}
