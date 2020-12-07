@@ -37,6 +37,11 @@ hr {
 .MuiButton-label {
     font-family: 'Jost', sans-serif;
 }
+
+.MuiPaginationItem-textPrimary.Mui-selected {
+    background-color: var(--secondBG) !important;
+}
+
 .MuiPaginationItem-textPrimary.Mui-selected:hover,
 .MuiPaginationItem-textPrimary.Mui-selected:active,
 .MuiPaginationItem-textPrimary.Mui-selected:focus,

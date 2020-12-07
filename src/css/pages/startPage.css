@@ -89,6 +89,16 @@
     margin: 5vh 0;
 }
 
-.gallery .photos {
+.gallery .images {
     width: 90vw;
+    margin: 0 auto;
+}
+
+.images > div {
+    width: 100%;
+}
+
+.images img {
+    width: 90vw;
+    max-height: 80vh;
 }

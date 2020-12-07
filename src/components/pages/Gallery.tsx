@@ -2,8 +2,15 @@ import {autoPlay} from "react-swipeable-views-utils";
 import SwipeableViews from "react-swipeable-views";
 import React, {ChangeEvent, useState} from "react";
 import Pagination from "@material-ui/lab/Pagination";
+import mainPhoto from '../../img/1.jpg';
+import secPhoto from '../../img/2.jpeg';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+
+const Images: {id: number, name: string}[] = [
+    { id: 1, name: mainPhoto },
+    { id: 2, name: secPhoto }
+]
 
 const PhotosAutoPlay = () => {
     const [index,setIndex] = useState<number>(1);
@@ -17,17 +24,25 @@ const PhotosAutoPlay = () => {
     }
 
     return (
-        <div>
-            <AutoPlaySwipeableViews index={index} onChangeIndex={handleIndexChange}>
-                <div style={{minHeight: '100px', backgroundColor: "red"}}>slide n°1</div>
-                <div style={{minHeight: '100px', backgroundColor: "red"}}>slide n°2</div>
-                <div style={{minHeight: '100px', backgroundColor: "red"}}>slide n°3</div>
+        <div className="gallery">
+            <AutoPlaySwipeableViews
+                index={index}
+                onChangeIndex={handleIndexChange}
+                interval={5000}
+                className="images"
+            >
+                {Images.map(image =>
+                    <div key={image.id}>
+                        <img src={image.name} alt="photo"/>
+                    </div>
+                )}
             </AutoPlaySwipeableViews>
             <Pagination
-                count={3}
+                count={Images.length}
                 page={index + 1}
                 onChange={handlePageChange}
                 color="primary"
+                size="medium"
             />
         </div>
     );

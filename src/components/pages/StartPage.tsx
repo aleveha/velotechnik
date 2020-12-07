@@ -68,9 +68,8 @@ const StartPage = () => {
                 </div>
             </div>
             <Divider />
-            <div className="gallery">
-                <PhotosAutoPlay />
-            </div>
+            <PhotosAutoPlay />
+            <Divider />
         </div>
     );
 };
