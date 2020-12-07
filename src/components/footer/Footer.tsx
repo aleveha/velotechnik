@@ -33,7 +33,7 @@ const Footer = () => {
                 <SocialMediaIcon
                     nameWhite={WhatsAppWhite}
                     nameColor={WhatsAppColor}
-                    href="https://wa.me/+79030038644" //заменить телефон!!!
+                    href="https://wa.me/+79160799279" //заменить телефон!!!
                 />
             </div>
         </div>

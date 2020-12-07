@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import photo1 from '../../img/1.jpg';
 import '../../css/pages/startPage.css';
 import MyButton from "../common/myButton";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {Divider} from "@material-ui/core";
+import PhotosAutoPlay from "./Gallery";
 
 interface IInfoBlock {
     label: string,
@@ -19,6 +20,15 @@ const info: IInfoBlock[] = [
 ]
 
 const StartPage = () => {
+    const mainInfoRef = useRef<HTMLInputElement>(null);
+    const onButtonClick = () => {
+        if (mainInfoRef && mainInfoRef.current) {
+            mainInfoRef.current.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    }
+
     return (
         <div className="startPage">
             <div className="mainPhoto">
@@ -28,10 +38,11 @@ const StartPage = () => {
                     path="/home"
                     content="УЗНАТЬ БОЛЬШЕ"
                     icon={<ArrowForwardIosIcon />}
+                    onClick={onButtonClick}
                 />
             </div>
             <Divider />
-            <div className="mainInfo">
+            <div className="mainInfo" ref={mainInfoRef}>
                 {info.map(info =>
                     <InfoBlock
                         key={info.label}
@@ -42,6 +53,24 @@ const StartPage = () => {
                 )}
             </div>
             <Divider />
+            <div className="takeAwayService">
+                <div className="photoContainer">
+                    <div className="photoContent">
+                        <h1 className="label">
+                            НЕ ПОЛУЧАЕТСЯ ПРИЕХАТЬ К НАМ? <br /> НЕ БЕДА! МЫ ПРИЕДЕМ К ВАМ САМИ!
+                        </h1>
+                        <p>
+                            УКАЖИТЕ АДРЕС И ТЕЛЕФОН, И В БЛИЖАЙШЕЕ ВРЕМЯ С ВАМИ СВЯЖЕТСЯ НАШ ВЫЕЗДНОЙ МАСТЕР
+                        </p>
+                    </div>
+                    <img src={photo1} alt="takeAwayPhoto"/>
+                    <MyButton path="/booking" content="ЗАПИСАТЬСЯ" />
+                </div>
+            </div>
+            <Divider />
+            <div className="gallery">
+                <PhotosAutoPlay />
+            </div>
         </div>
     );
 };

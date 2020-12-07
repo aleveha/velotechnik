@@ -39,8 +39,8 @@
 
 .infoBlock {
     width: 40vw;
-    min-width: 280px;
-    margin: 1.5rem 1rem;
+    max-width: 700px;
+    padding: 1.5rem 1rem;
 }
 
 .infoBlock h2 {
@@ -55,3 +55,40 @@
     font-size: 3vh;
 }
 
+@media (max-width: 1025px) {
+    .infoBlock {
+        width: 100%;
+    }
+}
+
+/*-----3-----*/
+.takeAwayService {
+    margin: 5vh 0;
+}
+
+.photoContainer > img,
+.photoContent {
+    width: 90vw;
+    margin: 2vh auto;
+
+    color: black;
+}
+
+.photoContent .label {
+    font-size: 4vh;
+    margin: 2vh 0;
+
+}
+.photoContent p {
+    font-size: 2.5vh;
+    margin: 2vh 0;
+}
+
+/*-----4-----*/
+.gallery {
+    margin: 5vh 0;
+}
+
+.gallery .photos {
+    width: 90vw;
+}

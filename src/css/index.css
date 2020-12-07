@@ -37,6 +37,12 @@ hr {
 .MuiButton-label {
     font-family: 'Jost', sans-serif;
 }
+.MuiPaginationItem-textPrimary.Mui-selected:hover,
+.MuiPaginationItem-textPrimary.Mui-selected:active,
+.MuiPaginationItem-textPrimary.Mui-selected:focus,
+.MuiPaginationItem-textPrimary.Mui-selected.Mui-focusVisible {
+    background-color: var(--buttonBG)!important;
+}
 
 :root {
     --secondBG: #3C3C3C;

@@ -22,7 +22,8 @@ const useStyles = makeStyles(() =>
 const MyButton = (props: {
     path: string
     content: string,
-    icon?: ReactElement
+    icon?: ReactElement,
+    onClick?: () => void
 }) => {
     const classes = useStyles();
 
@@ -33,6 +34,7 @@ const MyButton = (props: {
                 color="secondary"
                 className={classes.bookingButton}
                 endIcon={props.icon}
+                onClick={props.onClick}
             >
                 <p className={classes.buttonText}>{props.content}</p>
             </Button>

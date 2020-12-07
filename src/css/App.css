@@ -14,7 +14,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-height: 12vh;
+    height: 10vh;
+    min-height: 70px;
     background-color: var(--secondBG);
     max-width: 100vw;
 }
@@ -102,7 +103,8 @@
 
 /*FOOTER*/
 .footer {
-    min-height: 10vh;
+    min-height: 100px;
+    height: 10vh;
     grid-area: footer;
     background-color: var(--secondBG);
 
