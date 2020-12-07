@@ -49,6 +49,13 @@ hr {
     background-color: var(--buttonBG)!important;
 }
 
+.MuiPagination-root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
 :root {
     --secondBG: #3C3C3C;
     --buttonBG: #F82323;

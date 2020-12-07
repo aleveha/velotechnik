@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
-import photo1 from '../../img/1.jpg';
+import React, {useRef} from 'react';
+import main from '../../img/gallery/small/main-min.jpeg';
+import takeAway from '../../img/gallery/small/takeAway3.jpeg';
 import '../../css/pages/startPage.css';
 import MyButton from "../common/myButton";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -13,10 +14,10 @@ interface IInfoBlock {
 }
 
 const info: IInfoBlock[] = [
-    { label: "ДОСТУПНОСТЬ", main: "4", desc: "ПРОФЕССИОНАЛЬНЫХ СЕРВИСА В МОСКВЕ" },
-    { label: "ЗАКАЗЫ", main: "10.000+", desc: "ЧЕЛОВЕК ДОВЕРИЛО НАМ СВОИ БАЙКИ" },
-    { label: "ДОВЕРИЕ", main: "98.8%", desc: "КЛИЕНТОВ ВОЗВРАЩАЮТСЯ ЗА ПОМОЩЬЮ К НАМ" },
-    { label: "УДОБСТВО", main: "100%", desc: "БЫСТРЫЙ СЕРВИС И КОМФОРТНОЕ ОЖИДАНИЕ" },
+    {label: "ДОСТУПНОСТЬ", main: "4", desc: "ПРОФЕССИОНАЛЬНЫХ СЕРВИСА В МОСКВЕ"},
+    {label: "ЗАКАЗЫ", main: "10.000+", desc: "ЧЕЛОВЕК ДОВЕРИЛО НАМ СВОИ БАЙКИ"},
+    {label: "ДОВЕРИЕ", main: "98.8%", desc: "КЛИЕНТОВ ВОЗВРАЩАЮТСЯ ЗА ПОМОЩЬЮ К НАМ"},
+    {label: "УДОБСТВО", main: "100%", desc: "БЫСТРЫЙ СЕРВИС И КОМФОРТНОЕ ОЖИДАНИЕ"},
 ]
 
 const StartPage = () => {
@@ -31,17 +32,17 @@ const StartPage = () => {
 
     return (
         <div className="startPage">
-            <div className="mainPhoto">
-                <img src={photo1} alt="mainPhoto" />
+            <div className="mainPhoto photoContainer">
+                <img src={main} alt="mainPhoto"/>
                 <h1>ГЛАВНЫЙ ЗАГОЛОВОК</h1>
                 <MyButton
                     path="/home"
                     content="УЗНАТЬ БОЛЬШЕ"
-                    icon={<ArrowForwardIosIcon />}
+                    icon={<ArrowForwardIosIcon/>}
                     onClick={onButtonClick}
                 />
             </div>
-            <Divider />
+            <Divider/>
             <div className="mainInfo" ref={mainInfoRef}>
                 {info.map(info =>
                     <InfoBlock
@@ -52,24 +53,24 @@ const StartPage = () => {
                     />
                 )}
             </div>
-            <Divider />
+            <Divider/>
             <div className="takeAwayService">
-                <div className="photoContainer">
-                    <div className="photoContent">
+                <div className="photoContainer takeAway">
+                    <img src={takeAway} alt="takeAwayPhoto"/>
+                    <div>
                         <h1 className="label">
-                            НЕ ПОЛУЧАЕТСЯ ПРИЕХАТЬ К НАМ? <br /> НЕ БЕДА! МЫ ПРИЕДЕМ К ВАМ САМИ!
+                            НЕ ПОЛУЧАЕТСЯ ПРИЕХАТЬ К НАМ? <br/> НЕ БЕДА! МЫ ПРИЕДЕМ К ВАМ САМИ!
                         </h1>
                         <p>
                             УКАЖИТЕ АДРЕС И ТЕЛЕФОН, И В БЛИЖАЙШЕЕ ВРЕМЯ С ВАМИ СВЯЖЕТСЯ НАШ ВЫЕЗДНОЙ МАСТЕР
                         </p>
                     </div>
-                    <img src={photo1} alt="takeAwayPhoto"/>
-                    <MyButton path="/booking" content="ЗАПИСАТЬСЯ" />
+                    <MyButton path="/booking" content="ЗАПИСАТЬСЯ"/>
                 </div>
             </div>
-            <Divider />
-            <PhotosAutoPlay />
-            <Divider />
+            <Divider/>
+            <PhotosAutoPlay/>
+            <Divider/>
         </div>
     );
 };

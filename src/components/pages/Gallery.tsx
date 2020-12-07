@@ -2,14 +2,12 @@ import {autoPlay} from "react-swipeable-views-utils";
 import SwipeableViews from "react-swipeable-views";
 import React, {ChangeEvent, useState} from "react";
 import Pagination from "@material-ui/lab/Pagination";
-import mainPhoto from '../../img/1.jpg';
-import secPhoto from '../../img/2.jpeg';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const Images: {id: number, name: string}[] = [
-    { id: 1, name: mainPhoto },
-    { id: 2, name: secPhoto }
+    // { id: 1, name: mainPhoto },
+    // { id: 2, name: secPhoto }
 ]
 
 const PhotosAutoPlay = () => {
@@ -43,6 +41,8 @@ const PhotosAutoPlay = () => {
                 onChange={handlePageChange}
                 color="primary"
                 size="medium"
+                showFirstButton
+                showLastButton
             />
         </div>
     );

@@ -1,5 +1,9 @@
 /*-----1-----*/
 .mainPhoto {
+    height: 90vh;
+}
+
+.photoContainer {
     position: relative;
     max-height: 90vh;
     max-width: 100vw;
@@ -10,19 +14,27 @@
     align-items: center;
 }
 
-.mainPhoto > img {
+.mainPhoto img {
+    filter: brightness(90%);
+    max-height: 100%;
     min-width: 100%;
-    max-height: 90vh;
 }
 
-.mainPhoto > h1 {
+.photoContainer > h1 {
     position: absolute;
-    top: 10vh;
+    top: 6vw;
     margin: 0;
     font-size: 6vh;
 }
 
-.mainPhoto > .myButton {
+.photoContainer > div {
+    position: absolute;
+    top: 6vh;
+    margin: 0;
+    font-size: 3vh;
+}
+
+.photoContainer > .myButton {
     position: absolute;
     bottom: 5vw;
 }
@@ -66,22 +78,23 @@
     margin: 5vh 0;
 }
 
-.photoContainer > img,
-.photoContent {
+.takeAwayService .takeAway {
     width: 90vw;
-    margin: 2vh auto;
-
-    color: black;
+    margin: 0 auto;
 }
 
-.photoContent .label {
-    font-size: 4vh;
-    margin: 2vh 0;
-
+.takeAway img {
+    filter: brightness(40%);
+    width: 100%;
 }
-.photoContent p {
-    font-size: 2.5vh;
-    margin: 2vh 0;
+
+.takeAway p {
+    font-size: 2vh;
+}
+
+.takeAway h1 {
+    font-size: 4.5vh;
+    margin-bottom: 1rem;
 }
 
 /*-----4-----*/

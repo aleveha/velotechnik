@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles(() =>
     createStyles({
         bookingButton: {
-            height: "",
             margin: "0 1rem",
             backgroundColor: "var(--buttonBG)",
             '&:hover': {
