@@ -1,6 +1,8 @@
 /*-----1-----*/
 .mainPhoto {
     height: 90vh;
+    background-image: url("../../img/main-min.jpeg");
+    background-size: cover;
 }
 
 .photoContainer {
@@ -105,6 +107,8 @@
 .gallery .images {
     width: 90vw;
     margin: 0 auto;
+    max-height: 800px;
+    overflow: hidden;
 }
 
 .images > div {
@@ -112,6 +116,58 @@
 }
 
 .images img {
-    width: 90vw;
-    max-height: 80vh;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/*-----5-----*/
+.reviews {
+    color: black;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.reviewBlock {
+    width: 40vw;
+    max-width: 700px;
+    padding: 1.5rem 1rem;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+}
+
+.reviewBlock > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.reviewBlock > p {
+    text-align: start;
+    margin: 1rem 0;
+}
+
+.reviewBlock .personInfo {
+    margin: 0 1rem;
+}
+
+.personInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.avatar {
+    height: 10vh!important;
+    width: 10vh!important;
+}
+
+@media (max-width: 1025px) {
+    .reviewBlock {
+        width: 100%;
+        display: unset;
+    }
 }

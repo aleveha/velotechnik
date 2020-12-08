@@ -1,14 +1,17 @@
 import {autoPlay} from "react-swipeable-views-utils";
 import SwipeableViews from "react-swipeable-views";
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import Pagination from "@material-ui/lab/Pagination";
+import images from '../../functions/getAllImages';
+import {duration} from "@material-ui/core";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const Images: {id: number, name: string}[] = [
-    // { id: 1, name: mainPhoto },
-    // { id: 2, name: secPhoto }
-]
+const Images: { id: number, path: string }[] = images.map(image => {
+    return (
+        { id: images.indexOf(image) + 1, path: image }
+    );
+});
 
 const PhotosAutoPlay = () => {
     const [index,setIndex] = useState<number>(1);
@@ -16,7 +19,6 @@ const PhotosAutoPlay = () => {
     const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
         setIndex(value - 1);
     }
-
     const handleIndexChange = (value: number) => {
         setIndex(value);
     }
@@ -31,7 +33,7 @@ const PhotosAutoPlay = () => {
             >
                 {Images.map(image =>
                     <div key={image.id}>
-                        <img src={image.name} alt="photo"/>
+                        <img src={image.path} alt="photo"/>
                     </div>
                 )}
             </AutoPlaySwipeableViews>
@@ -41,8 +43,8 @@ const PhotosAutoPlay = () => {
                 onChange={handlePageChange}
                 color="primary"
                 size="medium"
-                showFirstButton
-                showLastButton
+                hidePrevButton
+                hideNextButton
             />
         </div>
     );
