@@ -1,0 +1,38 @@
+.booking {
+    color: black;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.booking > h1{
+    font-size: 5vh;
+}
+
+.bookingForm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 50vh;
+    margin: 3vh 0;
+}
+
+.formElement {
+    width: 40vw;
+    max-width: 500px;
+    min-width: 300px;
+}
+
+.booking .input {
+    margin: 16px 0;
+}
+
+@media (min-width: 600px) {
+    .bookingForm > div:first-child {
+        margin-bottom: -8px!important;
+    }
+}

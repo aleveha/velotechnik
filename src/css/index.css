@@ -56,6 +56,14 @@ hr {
     margin-top: 1rem;
 }
 
+.MuiSelect-root {
+    text-align: start;
+}
+
+.MuiListItem-button > span {
+    font-size: 90%;
+}
+
 :root {
     --secondBG: #3C3C3C;
     --buttonBG: #F82323;

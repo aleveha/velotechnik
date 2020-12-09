@@ -1,9 +1,8 @@
 import {autoPlay} from "react-swipeable-views-utils";
 import SwipeableViews from "react-swipeable-views";
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import Pagination from "@material-ui/lab/Pagination";
 import images from '../../functions/getAllImages';
-import {duration} from "@material-ui/core";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -33,7 +32,7 @@ const PhotosAutoPlay = () => {
             >
                 {Images.map(image =>
                     <div key={image.id}>
-                        <img src={image.path} alt="photo"/>
+                        <img src={image.path} alt="galleryPhoto"/>
                     </div>
                 )}
             </AutoPlaySwipeableViews>
