@@ -16,7 +16,7 @@ import {
     TextField,
     Snackbar
 } from "@material-ui/core";
-import { Formik } from 'formik';
+import {Formik, useFormik} from 'formik';
 import '../../css/pages/booking.css';
 import {KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -26,10 +26,20 @@ import moment from "moment";
 import {Keyboard} from "@material-ui/icons";
 import MyButton from "../common/myButton";
 import {useLocation} from "react-router";
+import * as Yup from 'yup';
+import 'yup-phone';
 
 const localeMap: { [key: string]: any } = {
     ru: ruLocale,
     en: usLocale
+}
+
+interface IFormValues {
+    name: string,
+    phoneNumber: string,
+    email: string,
+    service: string,
+    date: Date
 }
 
 interface IService {
@@ -71,23 +81,28 @@ function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Booking = () => {
+const ValidationForm = Yup.object().shape({
+    name: Yup.string()
+        .min(2, "Слишком короткое имя")
+        .max(50, "Слишком длинное имя")
+        .required("Обязательно"),
+    email: Yup.string()
+        .email('Неправильный адрес электронной почты')
+        .required("Обязательно"),
+    phoneNumber: Yup.string()
+        .phone("7")
+        .min(11, "Слишком короткий номер")
+        .required("Обязательно"),
+    service: Yup.string().required(),
+    date: Yup.date().min(new Date(), "Нельзя записаться в прошлое")
+})
+
+const BookingPage = () => {
     const classes = useStyles();
-    const location = useLocation();
-    const [openSnack, setOpenSnack] = useState<boolean>(false);
     const [locale, setLocale] = useState<string>("ru");
 
-    const [reservationInformation, setReservationInformation] = useState<{
-        service: string,
-        date: string,
-        name: string,
-        phoneNumber: string,
-        email: string
-    }>();
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectedService, setSelectedService] = useState<string>("");
-    const [selectedDate, setSelectedDate] = useState<Date>(
-        new Date()
-    );
     const [name, setName] = useState<string>("");
     const [phoneNumber, setPhoneNumber] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -100,7 +115,7 @@ const Booking = () => {
         const now = new Date();
         if (date && date >= now) setSelectedDate(date);
         else {
-            setOpenSnack(true);
+            // setOpenSnack(true);
             setSelectedDate(now);
         }
     };
@@ -117,47 +132,41 @@ const Booking = () => {
         setEmail(event.target.value);
     };
 
-    const handleSubmit = (event: any) => {
-        event.preventDefault();
-
-        setReservationInformation({
-            service: selectedService,
-            date: moment(selectedDate).format("DD.MM.YYYY HH:mm"),
-            name: name,
-            phoneNumber: phoneNumber,
-            email: email
-        });
+    const formValues: IFormValues = {
+        name: name,
+        phoneNumber: phoneNumber,
+        email: email,
+        service: selectedService,
+        date: selectedDate
     }
 
-    const handleSnackClose = (event?: React.SyntheticEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
+    const formik = useFormik({
+        initialValues: formValues,
+        validationSchema: ValidationForm,
+        onSubmit: (values: IFormValues) => {
+            console.log(values);
         }
-
-        setOpenSnack(false);
-    };
+    })
 
     return (
-        <div className="booking">
+        <div>
             <h1>ОНЛАЙН ЗАПИСЬ</h1>
-            <form autoComplete="off" className="bookingForm">
+            <form autoComplete="off" className="bookingForm" onSubmit={formik.handleSubmit}>
                 <div className="inputs">
-                    <FormControl variant="outlined" className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-outlined-label">ВЫБЕРЕТЕ СЕРВИС</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value={selectedService}
-                            onChange={onServiceChanged}
-                            label="ВЫБЕРЕТЕ СЕРВИС"
-                        >
-                            {Services.map(service =>
-                                <MenuItem key={service.id} value={service.district}>
-                                    <span>{service.address}, {service.district}</span>
-                                </MenuItem>
-                            )}
-                        </Select>
-                    </FormControl>
+                    <InputLabel id="demo-simple-select-outlined-label">ВЫБЕРЕТЕ СЕРВИС</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={formik.values.service}
+                        onChange={formik.handleChange}
+                        label="ВЫБЕРЕТЕ СЕРВИС"
+                    >
+                        {Services.map(service =>
+                            <MenuItem key={service.id} value={service.district}>
+                                <span>{service.address}, {service.district}</span>
+                            </MenuItem>
+                        )}
+                    </Select>
                     <div className="formElement">
                         <MuiPickersUtilsProvider
                             utils={DateFnsUtils}
@@ -190,7 +199,6 @@ const Booking = () => {
                                 onChange={handleDateChange}
                                 inputVariant="outlined"
                                 className={classes.textInput}
-                                error={openSnack}
                             />
                         </MuiPickersUtilsProvider>
                     </div>
@@ -233,24 +241,14 @@ const Booking = () => {
                     variant="contained"
                     color="secondary"
                     className={classes.bookingButton}
-                    onClick={handleSubmit}
                 >
                     <p className={classes.buttonText}>
                         ЗАПИСАТЬСЯ
                     </p>
                 </Button>
             </form>
-            <Snackbar
-                open={openSnack}
-                autoHideDuration={6000}
-                onClose={handleSnackClose}
-            >
-                <Alert onClose={handleSnackClose} severity="warning">
-                    Нельзя выбрать промежуток прошлого
-                </Alert>
-            </Snackbar>
         </div>
     );
 };
 
-export default Booking;
+export default BookingPage;
