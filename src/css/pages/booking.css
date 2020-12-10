@@ -1,6 +1,6 @@
 .booking {
     color: black;
-    min-height: 90vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,12 +13,15 @@
 }
 
 .bookingForm {
+    margin: 3vh 0;
+}
+
+.inputs {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     min-height: 50vh;
-    margin: 3vh 0;
 }
 
 .formElement {
