@@ -34,6 +34,10 @@ hr {
     height: 2px!important;
 }
 
+.padding {
+    padding: 0 0.5rem;
+}
+
 .MuiButton-label {
     font-family: 'Jost', sans-serif;
 }

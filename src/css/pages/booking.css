@@ -1,41 +1,49 @@
 .booking {
     color: black;
-    min-height: 80vh;
+    height: 100%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
 }
 
-.booking > h1{
-    font-size: 5vh;
+.booking > h1 {
+    margin-top: 1rem;
+    font-size: 6vh;
 }
 
-.bookingForm {
-    margin: 3vh 0;
-}
+.bookingForm > div:first-child {
+    min-height: 50vh;
 
-.inputs {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    min-height: 50vh;
 }
 
-.formElement {
+.bookingForm > button {
+    margin: 1rem 0;
+}
+
+.bookingField {
+    min-width: 280px;
+    max-width: 700px;
     width: 40vw;
-    max-width: 500px;
-    min-width: 300px;
+    margin: 0.5rem;
+    min-height: 80px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.booking .input {
-    margin: 16px 0;
+.bookingField > div {
+    width: 100%;
 }
 
-@media (min-width: 600px) {
-    .bookingForm > div:first-child {
-        margin-bottom: -8px!important;
-    }
+.submitButton {
+    background-color: var(--buttonBG) !important;
+    color: white!important;
+    border-radius: 10px!important;
 }

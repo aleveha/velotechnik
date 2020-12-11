@@ -107,13 +107,15 @@ const StartPage = () => {
             <PhotosAutoPlay/>
             <Divider/>
             <div className="reviews">
-                {Reviews.map(review =>
-                    <ReviewBlock
-                        score={review.score}
-                        name={review.name}
-                        text={review.text}
-                        sex={review.sex}
-                    />
+                {Reviews.map((review, index) =>
+                    <div key={index}>
+                        <ReviewBlock
+                            score={review.score}
+                            name={review.name}
+                            text={review.text}
+                            sex={review.sex}
+                        />
+                    </div>
                 )}
             </div>
         </div>

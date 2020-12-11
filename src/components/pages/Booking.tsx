@@ -1,35 +1,31 @@
-import React, {
-    ChangeEvent,
-    useContext,
-    useEffect,
-    useState
-} from 'react';
-import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
+import React, {useEffect, useState} from 'react';
 import {
     Button,
-    createStyles,
+    CircularProgress,
     FormControl,
+    FormHelperText,
     InputLabel,
-    makeStyles,
     MenuItem,
-    Select,
+    Select, Snackbar,
     TextField,
-    Snackbar
+    TextFieldProps
 } from "@material-ui/core";
-import { Formik } from 'formik';
-import '../../css/pages/booking.css';
-import {KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import {Field, FieldProps, Form, Formik, FormikValues} from 'formik';
+import DateFnsUtils from "@date-io/date-fns";
+import {KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import ruLocale from "date-fns/locale/ru";
 import usLocale from "date-fns/locale/en-US";
-import moment from "moment";
-import {Keyboard} from "@material-ui/icons";
-import MyButton from "../common/myButton";
-import {useLocation} from "react-router";
+import * as Yup from 'yup';
+import 'yup-phone';
+import '../../css/pages/booking.css';
+import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
 
-const localeMap: { [key: string]: any } = {
-    ru: ruLocale,
-    en: usLocale
+interface IFormValues {
+    fullName: string,
+    email: string,
+    service: string,
+    phone: string,
+    date: Date
 }
 
 interface IService {
@@ -38,219 +34,233 @@ interface IService {
     district: string
 }
 
+const localeMap: { [key: string]: any } = {
+    ru: ruLocale,
+    en: usLocale
+};
+
 const Services: IService[] = [
     {id: 1, address: "ул. Академика Волгина д.21", district: "Беляево"},
     {id: 2, address: "Чечерский проезд д.52", district: "Южное Бутово"}
-]
+];
 
-const useStyles = makeStyles(() =>
-    createStyles({
-        formControl: {
-            width: "40vw",
-            maxWidth: "500px",
-            minWidth: "300px",
-        },
-        textInput: {
-            width: "100%"
-        },
-        bookingButton: {
-            margin: "0 1rem",
-            backgroundColor: "var(--buttonBG)",
-            '&:hover': {
-                backgroundColor: "var(--buttonHoverBG)",
-            },
-            borderRadius: "20px"
-        },
-        buttonText: {
-            fontSize: "1.7rem"
-        }
-    }),
-);
+const validationSchema = Yup.object({
+    fullName: Yup.string().required("Обязательно").min(5, "Слишком короткое имя"),
+    service: Yup.string().required("Обязательно"),
+    email: Yup.string().required("Обязательно").email("Некорректный адрес электронной почты"),
+    phone: Yup.string().required("Обязательно").min(10, "Слишком короткий номер").max(10, "Слишком длинный номер").phone("7", undefined, "Некорректный номер"),
+    date: Yup.date().required("Обязательно").min(new Date(), "К сожалению, запись в прошлое невозможна")
+})
+
+const BookingForm = () => {
+    const [locale, setLocale] = useState<string>("ru");
+    const [status, setStatus] = useState<"success" | "error">("error");
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const initValues: IFormValues = {
+        fullName: "",
+        email: "",
+        service: "",
+        phone: "",
+        date: new Date()
+    }
+
+    const onDialogClose = () => {
+        setOpenDialog(false);
+    }
+
+    const SendReservation = (values: FormikValues) => {
+        return new Promise(((resolve, reject) => {
+            setTimeout(() => {
+                let didSucceed = Math.random() >= 0.5;
+                didSucceed ? resolve(new Date()) : reject('Error');
+            }, 2000);
+        }))
+    }
+
+    return (
+        <Formik
+            initialValues={initValues}
+            validationSchema={validationSchema}
+            validateOnBlur={false}
+            validateOnChange={false}
+            onSubmit={(values, {setSubmitting, resetForm}) => {
+                setSubmitting(true);
+                SendReservation(values).then((res) => {
+                    console.log(res);
+                    setStatus("success");
+                    setOpenDialog(true);
+                    setSubmitting(false);
+                    resetForm();
+                }).catch((err) => {
+                    console.log(err);
+                    setStatus("error");
+                    setOpenDialog(true);
+                    setSubmitting(false);
+                });
+            }}
+        >
+            {({
+                  values,
+                  errors,
+                  handleChange,
+                  isSubmitting
+              }) => (
+                <Form autoComplete="off" className="bookingForm">
+                    <div>
+                        <div className="bookingField">
+                            <FormControl variant="outlined" error={!!errors.service}>
+                                <InputLabel id="serviceLabel">ВЫБЕРЕТЕ СЕРВИС</InputLabel>
+                                <Select
+                                    label="ВЫБЕРЕТЕ СЕРВИС"
+                                    labelId="serviceLabel"
+                                    name="service"
+                                    value={values.service}
+                                    onChange={handleChange}
+                                >
+                                    {Services.map(service =>
+                                        <MenuItem key={service.id} value={service.district}>
+                                            <span>{service.address}, {service.district}</span>
+                                        </MenuItem>
+                                    )}
+                                </Select>
+                                {!!errors.service && <FormHelperText>Обязательно</FormHelperText>}
+                            </FormControl>
+                        </div>
+                        <div className="bookingField">
+                            <Field
+                                name="fullName"
+                                label="ФАМИЛИЯ И ИМЯ"
+                                placeholder="Иван Иванов"
+                                variant="outlined"
+                                helperText={errors.fullName}
+                                error={!!errors.fullName}
+                                as={TextField}
+                            />
+                        </div>
+                        <div className="bookingField">
+                            <Field
+                                name="email"
+                                label="ЭЛЕКТРОННАЯ ПОЧТА"
+                                placeholder="ivan.ivanov@yandex.ru"
+                                variant="outlined"
+                                helperText={errors.email}
+                                error={!!errors.email}
+                                as={TextField}
+                            />
+                        </div>
+                        <div className="bookingField">
+                            <Field
+                                name="phone"
+                                label="НОМЕР ТЕЛЕФОНА"
+                                placeholder="В формате 9001112233"
+                                variant="outlined"
+                                helperText={errors.phone}
+                                error={!!errors.phone}
+                                as={TextField}
+                            />
+                        </div>
+                        <div className="bookingField">
+                            <Field name="date" component={DatePickerField} locale={locale}/>
+                        </div>
+                        <div className="bookingField">
+                            <Field name="date" component={TimePickerField}/>
+                        </div>
+                    </div>
+                    <Button type="submit" variant="contained" disabled={isSubmitting} className="submitButton">
+                        {!isSubmitting ? <span>ПОДТВЕРДИТЬ</span> : <CircularProgress color="inherit"/>}
+                    </Button>
+                    <StatusMessage open={openDialog} handleClose={onDialogClose} status={status}/>
+                </Form>
+            )}
+        </Formik>
+    );
+};
+
+const DatePickerField = (props: FieldProps & TextFieldProps & { locale: string }) => {
+    const {field, form, locale} = props;
+    return (
+        <MuiPickersUtilsProvider
+            utils={DateFnsUtils}
+            locale={localeMap[locale]}
+        >
+            <KeyboardDatePicker
+                name="date"
+                margin="normal"
+                label="ВЫБЕРЕТЕ ДАТУ"
+                format="dd.MM.yyyy"
+                inputVariant="outlined"
+                value={field.value}
+                onChange={date => form.setFieldValue(field.name, date, true)}
+                disablePast
+            />
+        </MuiPickersUtilsProvider>
+    );
+}
+
+const TimePickerField = (props: FieldProps & TextFieldProps) => {
+    const {field, form} = props;
+    return (
+        <MuiPickersUtilsProvider
+            utils={DateFnsUtils}
+        >
+            <KeyboardTimePicker
+                name="date"
+                margin="normal"
+                label="ВЫБЕРЕТЕ ВРЕМЯ"
+                format="HH.mm"
+                inputVariant="outlined"
+                ampm={false}
+                minutesStep={10}
+                value={field.value}
+                onChange={date => form.setFieldValue(field.name, date, true)}
+                helperText={form.errors.date}
+                error={!!form.errors.date}
+            />
+        </MuiPickersUtilsProvider>
+    );
+}
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Booking = () => {
-    const classes = useStyles();
-    const location = useLocation();
-    const [openSnack, setOpenSnack] = useState<boolean>(false);
-    const [locale, setLocale] = useState<string>("ru");
+const StatusMessage = (props: { open: boolean, status: "success" | "error", handleClose: () => void }) => {
+    const message = (status: string) => {
+        let message = "";
 
-    const [reservationInformation, setReservationInformation] = useState<{
-        service: string,
-        date: string,
-        name: string,
-        phoneNumber: string,
-        email: string
-    }>();
-    const [selectedService, setSelectedService] = useState<string>("");
-    const [selectedDate, setSelectedDate] = useState<Date>(
-        new Date()
-    );
-    const [name, setName] = useState<string>("");
-    const [phoneNumber, setPhoneNumber] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-
-    const onServiceChanged = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setSelectedService(event.target.value as string);
-    };
-
-    const handleDateChange = (date: Date | null) => {
-        const now = new Date();
-        if (date && date >= now) setSelectedDate(date);
-        else {
-            setOpenSnack(true);
-            setSelectedDate(now);
+        switch (status) {
+            case "success":
+                message = "Вы успешно записаны!";
+                break;
+            case "error":
+                message = "Что-то пошло не так! Пропробуйте снова.";
+                break;
         }
-    };
 
-    const handleNameChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setName(event.target.value);
-    };
-
-    const handlePhoneNumberChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setPhoneNumber(event.target.value);
-    };
-
-    const handleEmailChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setEmail(event.target.value);
-    };
-
-    const handleSubmit = (event: any) => {
-        event.preventDefault();
-
-        setReservationInformation({
-            service: selectedService,
-            date: moment(selectedDate).format("DD.MM.YYYY HH:mm"),
-            name: name,
-            phoneNumber: phoneNumber,
-            email: email
-        });
+        return message;
     }
 
-    const handleSnackClose = (event?: React.SyntheticEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpenSnack(false);
-    };
-
     return (
-        <div className="booking">
+        <Snackbar
+            open={props.open}
+            autoHideDuration={4000}
+            onClose={props.handleClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+            <Alert severity={props.status}>
+                {message(props.status)}
+            </Alert>
+        </Snackbar>
+    );
+}
+
+const Booking = () => {
+    return (
+        <div className="booking padding">
             <h1>ОНЛАЙН ЗАПИСЬ</h1>
-            <form autoComplete="off" className="bookingForm">
-                <div className="inputs">
-                    <FormControl variant="outlined" className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-outlined-label">ВЫБЕРЕТЕ СЕРВИС</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value={selectedService}
-                            onChange={onServiceChanged}
-                            label="ВЫБЕРЕТЕ СЕРВИС"
-                        >
-                            {Services.map(service =>
-                                <MenuItem key={service.id} value={service.district}>
-                                    <span>{service.address}, {service.district}</span>
-                                </MenuItem>
-                            )}
-                        </Select>
-                    </FormControl>
-                    <div className="formElement">
-                        <MuiPickersUtilsProvider
-                            utils={DateFnsUtils}
-                            locale={localeMap[locale]}
-                        >
-                            <KeyboardDatePicker
-                                margin="normal"
-                                label="ВЫБЕРЕТЕ ДАТУ"
-                                format="dd.MM.yyyy"
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                inputVariant="outlined"
-                                className={classes.textInput}
-                                disablePast
-                            />
-                        </MuiPickersUtilsProvider>
-                    </div>
-                    <div className="formElement">
-                        <MuiPickersUtilsProvider
-                            utils={DateFnsUtils}
-                            locale={localeMap[locale]}
-                        >
-                            <KeyboardTimePicker
-                                margin="normal"
-                                label="ВЫБЕРЕТЕ ВРЕМЯ"
-                                format="HH.mm"
-                                ampm={false}
-                                minutesStep={10}
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                inputVariant="outlined"
-                                className={classes.textInput}
-                                error={openSnack}
-                            />
-                        </MuiPickersUtilsProvider>
-                    </div>
-                    <div className="formElement input">
-                        <TextField
-                            variant="outlined"
-                            type="text"
-                            label="ФАМИЛИЯ И ИМЯ"
-                            value={name}
-                            onChange={handleNameChange}
-                            className={classes.textInput}
-                            placeholder="Иван Иванов"
-                        />
-                    </div>
-                    <div className="formElement input">
-                        <TextField
-                            variant="outlined"
-                            type="number"
-                            label="НОМЕР ТЕЛЕФОНА"
-                            value={phoneNumber}
-                            onChange={handlePhoneNumberChange}
-                            className={classes.textInput}
-                            placeholder="В формате +79001112233"
-                        />
-                    </div>
-                    <div className="formElement input">
-                        <TextField
-                            variant="outlined"
-                            type="email"
-                            label="ЭЛЕКТРОННАЯ ПОЧТА"
-                            value={email}
-                            onChange={handleEmailChange}
-                            className={classes.textInput}
-                            placeholder="ivan.ivanov@yandex.ru"
-                        />
-                    </div>
-                </div>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
-                    className={classes.bookingButton}
-                    onClick={handleSubmit}
-                >
-                    <p className={classes.buttonText}>
-                        ЗАПИСАТЬСЯ
-                    </p>
-                </Button>
-            </form>
-            <Snackbar
-                open={openSnack}
-                autoHideDuration={6000}
-                onClose={handleSnackClose}
-            >
-                <Alert onClose={handleSnackClose} severity="warning">
-                    Нельзя выбрать промежуток прошлого
-                </Alert>
-            </Snackbar>
+            <BookingForm/>
         </div>
     );
-};
+}
 
 export default Booking;
