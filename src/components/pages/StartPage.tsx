@@ -8,6 +8,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {Avatar, Divider} from "@material-ui/core";
 import PhotosAutoPlay from "../common/Gallery";
 import {Rating} from "@material-ui/lab";
+import {Link} from 'react-router-dom';
 
 interface IInfoBlock {
     label: string,
@@ -70,12 +71,13 @@ const StartPage = () => {
         <div className="startPage">
             <div className="mainPhoto photoContainer">
                 <h1>ГЛАВНЫЙ ЗАГОЛОВОК</h1>
-                <MyButton
-                    path="/home"
-                    content="УЗНАТЬ БОЛЬШЕ"
-                    icon={<ArrowForwardIosIcon/>}
-                    onClick={onButtonClick}
-                />
+                <div id="learnMore">
+                    <MyButton
+                        content="УЗНАТЬ БОЛЬШЕ"
+                        icon={<ArrowForwardIosIcon/>}
+                        onClick={onButtonClick}
+                    />
+                </div>
             </div>
             <Divider/>
             <div className="mainInfo" ref={mainInfoRef}>
@@ -100,7 +102,9 @@ const StartPage = () => {
                             УКАЖИТЕ АДРЕС И ТЕЛЕФОН, И В БЛИЖАЙШЕЕ ВРЕМЯ С ВАМИ СВЯЖЕТСЯ НАШ ВЫЕЗДНОЙ МАСТЕР
                         </p>
                     </div>
-                    <MyButton path="/booking" content="ЗАПИСАТЬСЯ"/>
+                    <Link to="/booking">
+                        <MyButton content="ЗАПИСАТЬСЯ"/>
+                    </Link>
                 </div>
             </div>
             <Divider/>

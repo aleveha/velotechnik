@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
-    Button,
-    CircularProgress,
+    CircularProgress, createMuiTheme,
     FormControl,
     FormHelperText,
     InputLabel,
-    MenuItem,
+    MenuItem, MuiThemeProvider,
     Select, Snackbar,
     TextField,
     TextFieldProps
@@ -19,6 +18,17 @@ import * as Yup from 'yup';
 import 'yup-phone';
 import '../../css/pages/booking.css';
 import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
+import MyButton from "../common/myButton";
+import { Overrides } from '@material-ui/core/styles/overrides';
+import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
+
+type overridesNameToClassKey = {
+    [P in keyof MuiPickersOverrides]: keyof MuiPickersOverrides[P];
+};
+
+declare module '@material-ui/core/styles/overrides' {
+    export interface ComponentNameToClassKey extends overridesNameToClassKey {}
+}
 
 interface IFormValues {
     fullName: string,
@@ -50,12 +60,42 @@ const validationSchema = Yup.object({
     email: Yup.string().required("Обязательно").email("Некорректный адрес электронной почты"),
     phone: Yup.string().required("Обязательно").min(10, "Слишком короткий номер").max(10, "Слишком длинный номер").phone("7", undefined, "Некорректный номер"),
     date: Yup.date().required("Обязательно").min(new Date(), "К сожалению, запись в прошлое невозможна")
-})
+});
+
+const defaultMaterialTheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: "#3C3C3C"
+        }
+    },
+    overrides: {
+        MuiPickersToolbar: {
+            toolbar: {
+                backgroundColor: "#3C3C3C",
+            },
+        },
+        MuiPickersDay: {
+            day: {
+                color: "#3C3C3C",
+            },
+            daySelected: {
+                backgroundColor: "#F82323",
+            },
+            dayDisabled: {
+                color: "#9b9b9b",
+            },
+            current: {
+                color: "#F82323",
+            },
+        }
+    },
+});
 
 const BookingForm = () => {
     const [locale, setLocale] = useState<string>("ru");
     const [status, setStatus] = useState<"success" | "error">("error");
     const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [firstValidation, setFirstValidation] = useState<boolean>(true);
     const initValues: IFormValues = {
         fullName: "",
         email: "",
@@ -66,6 +106,10 @@ const BookingForm = () => {
 
     const onDialogClose = () => {
         setOpenDialog(false);
+    }
+
+    const handleFirstValidation = () => {
+        setFirstValidation(false);
     }
 
     const SendReservation = (values: FormikValues) => {
@@ -81,8 +125,8 @@ const BookingForm = () => {
         <Formik
             initialValues={initValues}
             validationSchema={validationSchema}
-            validateOnBlur={false}
-            validateOnChange={false}
+            validateOnBlur={!firstValidation}
+            validateOnChange={!firstValidation}
             onSubmit={(values, {setSubmitting, resetForm}) => {
                 setSubmitting(true);
                 SendReservation(values).then((res) => {
@@ -90,6 +134,7 @@ const BookingForm = () => {
                     setStatus("success");
                     setOpenDialog(true);
                     setSubmitting(false);
+                    setFirstValidation(true);
                     resetForm();
                 }).catch((err) => {
                     console.log(err);
@@ -159,16 +204,21 @@ const BookingForm = () => {
                                 as={TextField}
                             />
                         </div>
-                        <div className="bookingField">
-                            <Field name="date" component={DatePickerField} locale={locale}/>
-                        </div>
-                        <div className="bookingField">
-                            <Field name="date" component={TimePickerField}/>
-                        </div>
+                        <MuiThemeProvider theme={defaultMaterialTheme}>
+                            <div className="bookingField">
+                                <Field name="date" component={DatePickerField} locale={locale}/>
+                            </div>
+                            <div className="bookingField">
+                                <Field name="date" component={TimePickerField}/>
+                            </div>
+                        </MuiThemeProvider>
                     </div>
-                    <Button type="submit" variant="contained" disabled={isSubmitting} className="submitButton">
-                        {!isSubmitting ? <span>ПОДТВЕРДИТЬ</span> : <CircularProgress color="inherit"/>}
-                    </Button>
+                    <MyButton
+                        content={!isSubmitting ? <span>ПОДТВЕРДИТЬ</span> : <CircularProgress color="inherit"/>}
+                        type="submit"
+                        disabled={isSubmitting}
+                        onClick={handleFirstValidation}
+                    />
                     <StatusMessage open={openDialog} handleClose={onDialogClose} status={status}/>
                 </Form>
             )}
@@ -245,7 +295,7 @@ const StatusMessage = (props: { open: boolean, status: "success" | "error", hand
             open={props.open}
             autoHideDuration={4000}
             onClose={props.handleClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            anchorOrigin={{vertical: "bottom", horizontal: "center"}}
         >
             <Alert severity={props.status}>
                 {message(props.status)}

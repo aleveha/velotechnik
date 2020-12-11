@@ -29,14 +29,14 @@
     font-size: 6vh;
 }
 
-.photoContainer > div {
+.photoContainer > div:not(#learnMore) {
     position: absolute;
-    top: 6vh;
+    top: 6vw;
     margin: 0;
-    font-size: 3vh;
+    font-size: 6vh;
 }
 
-.photoContainer > .myButton {
+.photoContainer > #learnMore {
     position: absolute;
     bottom: 5vw;
 }

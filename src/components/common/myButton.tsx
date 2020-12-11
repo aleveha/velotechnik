@@ -1,6 +1,10 @@
 import React, {ReactElement} from 'react';
-import { Button, makeStyles, createStyles } from '@material-ui/core';
-import { Link } from "react-router-dom";
+import {Button, makeStyles, createStyles, ButtonProps} from '@material-ui/core';
+
+interface IButtonProps extends ButtonProps {
+    content: string | JSX.Element,
+    icon?: ReactElement,
+}
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -10,34 +14,26 @@ const useStyles = makeStyles(() =>
             '&:hover': {
                 backgroundColor: "var(--buttonHoverBG)",
             },
-            borderRadius: "20px"
-        },
-        buttonText: {
-            fontSize: "1.7rem"
+            borderRadius: "20px",
+            fontSize: "1.5vw"
         }
     }),
 );
 
-const MyButton = (props: {
-    path: string
-    content: string,
-    icon?: ReactElement,
-    onClick?: () => void
-}) => {
+const MyButton = (props: IButtonProps) => {
     const classes = useStyles();
 
     return (
-        <Link to={props.path} className="myButton">
-            <Button
-                variant="contained"
-                color="secondary"
-                className={classes.bookingButton}
-                endIcon={props.icon}
-                onClick={props.onClick}
-            >
-                <p className={classes.buttonText}>{props.content}</p>
-            </Button>
-        </Link>
+        <Button
+            type={props.type}
+            variant="contained"
+            color="secondary"
+            className={classes.bookingButton}
+            endIcon={props.icon}
+            onClick={props.onClick}
+        >
+            {props.content}
+        </Button>
     );
 };
 
