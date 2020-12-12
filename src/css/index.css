@@ -27,6 +27,11 @@ p, h1, h2, h3 {
 
 a {
     text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: var(--buttonBG);
 }
 
 hr {
@@ -66,6 +71,10 @@ hr {
 
 .MuiListItem-button > span {
     font-size: 90%;
+}
+
+.MuiIconButton-root {
+    padding: 0 12px!important;
 }
 
 :root {

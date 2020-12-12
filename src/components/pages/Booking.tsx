@@ -19,15 +19,15 @@ import 'yup-phone';
 import '../../css/pages/booking.css';
 import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
 import MyButton from "../common/myButton";
-import { Overrides } from '@material-ui/core/styles/overrides';
-import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
+import {MuiPickersOverrides} from '@material-ui/pickers/typings/overrides';
 
 type overridesNameToClassKey = {
     [P in keyof MuiPickersOverrides]: keyof MuiPickersOverrides[P];
 };
 
 declare module '@material-ui/core/styles/overrides' {
-    export interface ComponentNameToClassKey extends overridesNameToClassKey {}
+    export interface ComponentNameToClassKey extends overridesNameToClassKey {
+    }
 }
 
 interface IFormValues {
@@ -41,7 +41,10 @@ interface IFormValues {
 interface IService {
     id: number,
     address: string,
-    district: string
+    subwayStation: string,
+    district: string,
+    phoneNumber: string,
+    email: string
 }
 
 const localeMap: { [key: string]: any } = {
@@ -49,9 +52,23 @@ const localeMap: { [key: string]: any } = {
     en: usLocale
 };
 
-const Services: IService[] = [
-    {id: 1, address: "ул. Академика Волгина д.21", district: "Беляево"},
-    {id: 2, address: "Чечерский проезд д.52", district: "Южное Бутово"}
+export const Services: IService[] = [
+    {
+        id: 1,
+        address: "ул. Академика Волгина д.21",
+        subwayStation: "м. Беляево",
+        district: "Беляево",
+        phoneNumber:"+79164959496",
+        email: "velotechnik@yandex.ru"
+    },
+    {
+        id: 2,
+        address: "Чечерский проезд д.52",
+        subwayStation: "м. Беляево",
+        district: "Южное Бутово",
+        phoneNumber:"+79856643619",
+        email: "velotechnik@yandex.ru"
+    }
 ];
 
 const validationSchema = Yup.object({

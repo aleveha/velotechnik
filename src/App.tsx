@@ -5,6 +5,7 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import StartPage from "./components/pages/StartPage";
 import Booking from './components/pages/Booking';
+import Contacts from "./components/pages/Contacts";
 
 function App() {
     return (
@@ -15,7 +16,7 @@ function App() {
                     <Switch>
                         <Route path="/home" component={StartPage}/>
                         <Route path="/booking" component={Booking}/>
-                        <Route path="/contacts"/>
+                        <Route path="/contacts" component={Contacts}/>
                         <Route path="/services"/>
                         <Route path="/photos"/>
                         <Redirect to="/home" from="/"/>
