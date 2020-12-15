@@ -23,7 +23,6 @@ export const Tabs: ITab[] = [
     { id: 1, name: "ГЛАВНАЯ", path: "/home" },
     { id: 2, name: "ЗАПИСЬ", path: "/booking" },
     { id: 3, name: "УСЛУГИ", path: "/services" },
-    { id: 4, name: "ГАЛЕРЕЯ", path: "/photos" },
     { id: 5, name: "КОНТАКТЫ", path: "/contacts" }
 ]
 

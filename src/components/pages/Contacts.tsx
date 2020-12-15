@@ -1,36 +1,54 @@
 import React from 'react';
 import '../../css/pages/contacts.css';
 import {Services} from "./Booking";
-import { YMaps, Map } from 'react-yandex-maps';
 
 const Contacts = () => {
     return (
         <div className="contacts">
-            <div>
+            <div className="background"/>
+            <div className="label">
+                <h1>
+                    В НАШИХ МАСТЕРСКИХ ВЫ СМОЖЕТЕ ПОЛУЧИТЬ ПРОФЕССИОНАЛЬНУЮ ПОМОЩЬ ПО РЕМОНТУ И ОБСЛУЖИВАНИЮ ВАШЕГО
+                    СПОРТИВНОГО ОБОРУДОВАНИЯ
+                </h1>
+            </div>
+            <div className="contactInfo">
                 {Services.map(service =>
                     <div key={service.id}>
                         <div>
                             <h3>АДРЕС</h3>
-                            <p>{service.address}</p>
+                            <a
+                                href={`https://yandex.ru/maps/?pt=${service.coordinates[1]},${service.coordinates[0]}&z=16&l=map`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {service.address}
+                            </a>
                         </div>
                         <div>
                             <h3>ТЕЛЕФОН</h3>
-                            <a href={`tel:${service.phoneNumber}`}>{service.phoneNumber}</a>
+                            <a
+                                href={`tel:${service.phoneNumber}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {service.phoneNumber}
+                            </a>
                         </div>
                         <div>
                             <h3>ЭЛ. АДРЕС</h3>
-                            <a href={`mailto:${service.email}`}>velotechnik@yandex.ru</a>
+                            <a
+                                href={`mailto:${service.email}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {service.email}
+                            </a>
                         </div>
                     </div>
                 )}
             </div>
-            <div>
-                <YMaps>
-                    <Map
-                        defaultState={{ center: [55.75, 37.57], zoom: 9 }}
-                    />
-                </YMaps>
-            </div>
+            <p>*адрес, номер телефона и электронная почта являются активными ссылками</p>
         </div>
     );
 };

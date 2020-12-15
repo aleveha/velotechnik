@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
+    "@types/google-map-react": "^2.1.0",
     "@types/jest": "^26.0.16",
     "@types/node": "^12.19.8",
     "@types/react": "^16.14.2",
@@ -20,6 +21,7 @@
     "@types/yup": "^0.29.10",
     "date-fns": "^2.16.1",
     "formik": "^2.2.6",
+    "google-maps-react": "^2.0.6",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -30,6 +32,7 @@
     "react-yandex-maps": "^4.6.0",
     "typescript": "^4.1.2",
     "web-vitals": "^0.2.4",
+    "yandex-map-react": "^1.1.1",
     "yup": "^0.32.8",
     "yup-phone": "^1.2.16"
   },

@@ -123,7 +123,7 @@
 }
 
 .siteMap .tab {
-    font-size: 1.8vw;
+    font-size: 1.7vh;
     margin: 0 1rem;
     line-height: 80%;
 }
@@ -135,7 +135,7 @@
 }
 
 .socialIcon {
-    width: 4.5vw;
+    width: 6vh;
 }
 
 @media (max-width: 630px) {
@@ -148,6 +148,6 @@
     }
 
     .socialIcon {
-        width: 10vw;
+        width: 8vh;
     }
 }

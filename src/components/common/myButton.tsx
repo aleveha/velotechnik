@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
                 backgroundColor: "var(--buttonHoverBG)",
             },
             borderRadius: "20px",
-            fontSize: "1.5vw"
+            fontSize: "2vh"
         }
     }),
 );

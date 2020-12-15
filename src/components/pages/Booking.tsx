@@ -44,7 +44,8 @@ interface IService {
     subwayStation: string,
     district: string,
     phoneNumber: string,
-    email: string
+    email: string,
+    coordinates: number[]
 }
 
 const localeMap: { [key: string]: any } = {
@@ -59,7 +60,8 @@ export const Services: IService[] = [
         subwayStation: "м. Беляево",
         district: "Беляево",
         phoneNumber:"+79164959496",
-        email: "velotechnik@yandex.ru"
+        email: "velotechnik@yandex.ru",
+        coordinates: [55.647055, 37.512607]
     },
     {
         id: 2,
@@ -67,7 +69,8 @@ export const Services: IService[] = [
         subwayStation: "м. Беляево",
         district: "Южное Бутово",
         phoneNumber:"+79856643619",
-        email: "velotechnik@yandex.ru"
+        email: "velotechnik@yandex.ru",
+        coordinates: [55.533333, 37.530687]
     }
 ];
 

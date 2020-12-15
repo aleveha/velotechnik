@@ -1,8 +1,69 @@
 .contacts {
-    color: black;
-    height: 100%;
+    color: var(--secondText);
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.contacts a {
+    color: var(--secondText)
+}
+
+.contacts a:hover {
+    color: var(--buttonBG)
+}
+
+.contacts > .background {
+    position: absolute;
+    top: -5px;
+    width: 105%;
+    height: 105%;
+    z-index: -1;
+    background: url("../../img/gallery/small/image18.jpeg") no-repeat;
+    background-size: cover;
+    filter: brightness(0.5) blur(3px);
+}
+
+.label {
+    margin: 3rem 1rem 0 1rem;
+}
+
+.label > h1 {
+    font-size: 4vh;
+}
+
+.contactInfo {
+    margin: 3vh 1rem 0 1rem;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+}
+
+.contactInfo > div > div {
+    margin: 3vh 0;
+}
+
+.contactInfo h3 {
+    font-size: 4vh;
+}
+
+.contactInfo a {
+    font-size: 3vh;
+}
+
+.contacts > p {
+    font-size: 2vh;
+    margin: 0.5rem 0;
+}
+
+@media (max-width: 375px) {
+    .label > h1 {
+        font-size: 3vh;
+    }
 }
