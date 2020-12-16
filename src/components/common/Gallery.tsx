@@ -2,18 +2,29 @@ import {autoPlay} from "react-swipeable-views-utils";
 import SwipeableViews from "react-swipeable-views";
 import React, {ChangeEvent, useState} from "react";
 import Pagination from "@material-ui/lab/Pagination";
-import images from '../../functions/getAllImages';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const Images: { id: number, path: string }[] = images.map(image => {
+const getImages = () => {
+    function importAll(r: any) {
+        return r.keys().map(r);
+    }
+
+    const images = importAll(require.context('../../img/gallery/small', false, /\.(png|jpe?g|svg)$/));
+
+    return Object.keys(images).map(key => {
+        return images[key].default;
+    });
+}
+const imageArray = getImages();
+const Images: { id: number, path: string }[] = imageArray.map(image => {
     return (
-        { id: images.indexOf(image) + 1, path: image }
+        {id: imageArray.indexOf(image) + 1, path: image}
     );
 });
 
 const PhotosAutoPlay = () => {
-    const [index,setIndex] = useState<number>(1);
+    const [index, setIndex] = useState<number>(1);
 
     const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
         setIndex(value - 1);
