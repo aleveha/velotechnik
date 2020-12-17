@@ -1,11 +1,20 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import avatar from '../../img/avatar.jpg';
 import avatarFemale from '../../img/avatarFemale.png';
 import takeAway from '../../img/takeAway3.jpeg';
 import '../../css/pages/startPage.css';
 import MyButton from "../common/myButton";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import {Avatar, Divider} from "@material-ui/core";
+import {
+    Avatar,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Divider, makeStyles
+} from "@material-ui/core";
 import PhotosAutoPlay from "../common/Gallery";
 import {Rating} from "@material-ui/lab";
 import {Link} from 'react-router-dom';
@@ -102,9 +111,7 @@ const StartPage = () => {
                             УКАЖИТЕ АДРЕС И ТЕЛЕФОН, И В БЛИЖАЙШЕЕ ВРЕМЯ С ВАМИ СВЯЖЕТСЯ НАШ ВЫЕЗДНОЙ МАСТЕР
                         </p>
                     </div>
-                    <Link to="/booking">
-                        <MyButton content="ЗАПИСАТЬСЯ"/>
-                    </Link>
+                    <TakeAwayButton/>
                 </div>
             </div>
             <Divider/>
@@ -125,6 +132,70 @@ const StartPage = () => {
         </div>
     );
 };
+
+const useStyles = makeStyles({
+    contact: {
+        marginTop: "1rem",
+        fontSize: "1.25rem"
+    },
+    dialogTitle: {
+        backgroundColor: "var(--secondBG)",
+        color: "var(--secondText)"
+    },
+    closeButton: {
+        '&:hover': {
+            backgroundColor: "var(--buttonHoverBG)",
+            color: "var(--secondText)"
+        }
+    },
+    dialogContent: {
+        margin: "1rem 0"
+    }
+})
+
+const TakeAwayButton = () => {
+    const classes = useStyles();
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+    const handleOpen = () => {
+        setOpenDialog(true);
+    }
+    const handleClose = () => {
+        setOpenDialog(false);
+    }
+
+    return (
+        <div className="takeAwayButton">
+            <MyButton content="ЗАПИСАТЬСЯ" onClick={handleOpen}/>
+            <Dialog open={openDialog} onClose={handleClose}>
+                <DialogTitle
+                    className={classes.dialogTitle}
+                >
+                    ВЫЕЗДНОЙ СЕРВИС
+                </DialogTitle>
+                <DialogContent className={classes.dialogContent}>
+                    <h5>
+                        ДЛЯ ЗАПИСИ СВЯЖИТЕСЬ, ПОЖАЛУЙСТА, С НАШИМ МАСТРЕОМ
+                    </h5>
+                    <div className={classes.contact}>
+                        <p>ТЕЛЕФОН:</p>
+                        <a href="tel:+79160799279">+7 (916) 079-92-79</a>
+                    </div>
+                </DialogContent>
+                <Divider/>
+                <DialogActions>
+                    <Button
+                        className={classes.closeButton}
+                        variant={"contained"}
+                        onClick={handleClose}
+                    >
+                        ЗАКРЫТЬ
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
+}
 
 const InfoBlock = (props: IInfoBlock) => {
     return (

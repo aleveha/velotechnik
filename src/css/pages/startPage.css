@@ -29,7 +29,7 @@
     font-size: 6vh;
 }
 
-.photoContainer > div:not(#learnMore) {
+.photoContainer > div:not(#learnMore):not(.takeAwayButton) {
     position: absolute;
     top: 6vw;
     margin: 0;
@@ -39,6 +39,11 @@
 .photoContainer > #learnMore {
     position: absolute;
     bottom: 5vw;
+}
+
+.takeAwayButton {
+    position: absolute;
+    bottom: 20px;
 }
 
 /*-----2-----*/
@@ -95,13 +100,13 @@
 }
 
 .takeAway h1 {
-    font-size: 4.5vh;
-    margin-bottom: 1rem;
+    font-size: 4vh;
+    margin: 1rem;
 }
 
 /*-----4-----*/
 .gallery {
-    margin: 5vh 0;
+    margin: 2rem 0;
 }
 
 .gallery .images {
@@ -168,6 +173,7 @@
 @media (max-width: 1025px) {
     .reviewBlock {
         width: 100%;
-        display: unset;
+        display: block;
+        max-width: 340px;
     }
 }

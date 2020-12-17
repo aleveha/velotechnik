@@ -20,6 +20,7 @@ import '../../css/pages/booking.css';
 import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
 import MyButton from "../common/myButton";
 import {MuiPickersOverrides} from '@material-ui/pickers/typings/overrides';
+import emailjs from 'emailjs-com';
 
 type overridesNameToClassKey = {
     [P in keyof MuiPickersOverrides]: keyof MuiPickersOverrides[P];
@@ -59,7 +60,7 @@ export const Services: IService[] = [
         address: "ул. Академика Волгина д.21",
         subwayStation: "м. Беляево",
         district: "Беляево",
-        phoneNumber:"+79164959496",
+        phoneNumber: "+79164959496",
         email: "velotechnik@yandex.ru",
         coordinates: [55.647055, 37.512607]
     },
@@ -68,7 +69,7 @@ export const Services: IService[] = [
         address: "Чечерский проезд д.52",
         subwayStation: "м. Беляево",
         district: "Южное Бутово",
-        phoneNumber:"+79856643619",
+        phoneNumber: "+79856643619",
         email: "velotechnik@yandex.ru",
         coordinates: [55.533333, 37.530687]
     }
@@ -112,6 +113,9 @@ const defaultMaterialTheme = createMuiTheme({
 });
 
 const BookingForm = () => {
+    const serviceIdEmailJS = "default_service";
+    const templateIdEmailJS = "order_1";
+    const userIdEmailJS = "user_ZIonJ648Va8kUbz3lUK1j";
     const [locale, setLocale] = useState<string>("ru");
     const [status, setStatus] = useState<"success" | "error">("error");
     const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -133,12 +137,23 @@ const BookingForm = () => {
     }
 
     const SendReservation = (values: FormikValues) => {
-        return new Promise(((resolve, reject) => {
-            setTimeout(() => {
-                let didSucceed = Math.random() >= 0.5;
-                didSucceed ? resolve(new Date()) : reject('Error');
-            }, 2000);
-        }))
+        return new Promise((resolve, reject) => {
+            emailjs.send(serviceIdEmailJS, templateIdEmailJS, {
+                fullName: values['fullName'],
+                email: values['email'],
+                service: values['service'],
+                date: values['date'],
+                time: values['date']
+            }, userIdEmailJS)
+                .then(res => {
+                    console.log("SUCCESS!", res);
+                    resolve(res);
+                })
+                .catch(err => {
+                    console.log("ERROR", err);
+                    reject(err);
+                });
+        });
     }
 
     return (
@@ -149,15 +164,13 @@ const BookingForm = () => {
             validateOnChange={!firstValidation}
             onSubmit={(values, {setSubmitting, resetForm}) => {
                 setSubmitting(true);
-                SendReservation(values).then((res) => {
-                    console.log(res);
+                SendReservation(values).then(() => {
                     setStatus("success");
                     setOpenDialog(true);
                     setSubmitting(false);
                     setFirstValidation(true);
                     resetForm();
-                }).catch((err) => {
-                    console.log(err);
+                }).catch(() => {
                     setStatus("error");
                     setOpenDialog(true);
                     setSubmitting(false);
