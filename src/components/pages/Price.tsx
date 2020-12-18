@@ -221,6 +221,8 @@ const Category = (props: ICategory) => {
             <Dialog
                 open={dialogOpen}
                 onClose={handleDialogClose}
+                fullWidth={true}
+                maxWidth="md"
             >
                 <DialogTitle className={classes.dialogTitle}>
                     {props.name}

@@ -21,10 +21,12 @@ import MuiAlert, {AlertProps} from "@material-ui/lab/Alert";
 import MyButton from "../common/myButton";
 import {MuiPickersOverrides} from '@material-ui/pickers/typings/overrides';
 import emailjs from 'emailjs-com';
+import moment from 'moment';
+import 'moment/locale/ru';
 
 type overridesNameToClassKey = {
     [P in keyof MuiPickersOverrides]: keyof MuiPickersOverrides[P];
-};
+}
 
 declare module '@material-ui/core/styles/overrides' {
     export interface ComponentNameToClassKey extends overridesNameToClassKey {
@@ -49,7 +51,7 @@ interface IService {
     coordinates: number[]
 }
 
-const localeMap: { [key: string]: any } = {
+const localePickerMap: { [key: string]: any } = {
     ru: ruLocale,
     en: usLocale
 };
@@ -115,6 +117,7 @@ const defaultMaterialTheme = createMuiTheme({
 const BookingForm = () => {
     const serviceIdEmailJS = "default_service";
     const templateIdEmailJS = "order_1";
+    const templateIdServiceEmailJS = "service_email";
     const userIdEmailJS = "user_ZIonJ648Va8kUbz3lUK1j";
     const [locale, setLocale] = useState<string>("ru");
     const [status, setStatus] = useState<"success" | "error">("error");
@@ -136,24 +139,45 @@ const BookingForm = () => {
         setFirstValidation(false);
     }
 
-    const SendReservation = (values: FormikValues) => {
-        return new Promise((resolve, reject) => {
+    async function SendReservation (values: FormikValues & IFormValues) {
+         const userEmail:boolean = await new Promise((resolve, reject) => {
             emailjs.send(serviceIdEmailJS, templateIdEmailJS, {
-                fullName: values['fullName'],
-                email: values['email'],
-                service: values['service'],
-                date: values['date'],
-                time: values['date']
+                fullName: values.fullName,
+                email: values.email,
+                service: values.service,
+                date: moment(values.date).locale(locale).format("L"),
+                time: moment(values.date).format("LT")
             }, userIdEmailJS)
                 .then(res => {
-                    console.log("SUCCESS!", res);
-                    resolve(res);
+                    console.log("SUCCESS! User email is sent!", res);
+                    resolve(true);
                 })
                 .catch(err => {
-                    console.log("ERROR", err);
-                    reject(err);
+                    console.log("ERROR! User email isn't sent!", err);
+                    reject(false);
                 });
         });
+
+         const serviceEmail:boolean = await new Promise((resolve, reject) => {
+             emailjs.send(serviceIdEmailJS, templateIdServiceEmailJS, {
+                 fullName: values.fullName,
+                 email: values.email,
+                 service: values.service,
+                 date: moment(values.date).locale(locale).format("L"),
+                 time: moment(values.date).format("LT"),
+                 phone: values.phone
+             }, userIdEmailJS)
+                 .then(res => {
+                     console.log("SUCCESS! Service email is sent!", res);
+                     resolve(true);
+                 })
+                 .catch(err => {
+                     console.log("ERROR! Service email isn't sent!", err);
+                     reject(false);
+                 });
+         })
+
+        return userEmail && serviceEmail;
     }
 
     return (
@@ -196,7 +220,7 @@ const BookingForm = () => {
                                     onChange={handleChange}
                                 >
                                     {Services.map(service =>
-                                        <MenuItem key={service.id} value={service.district}>
+                                        <MenuItem key={service.id} value={`${service.address}, ${service.district}`}>
                                             <span>{service.address}, {service.district}</span>
                                         </MenuItem>
                                     )}
@@ -264,7 +288,7 @@ const DatePickerField = (props: FieldProps & TextFieldProps & { locale: string }
     return (
         <MuiPickersUtilsProvider
             utils={DateFnsUtils}
-            locale={localeMap[locale]}
+            locale={localePickerMap[locale]}
         >
             <KeyboardDatePicker
                 name="date"

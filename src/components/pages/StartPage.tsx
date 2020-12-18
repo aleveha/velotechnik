@@ -11,13 +11,11 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
     Divider, makeStyles
 } from "@material-ui/core";
 import PhotosAutoPlay from "../common/Gallery";
 import {Rating} from "@material-ui/lab";
-import {Link} from 'react-router-dom';
 
 interface IInfoBlock {
     label: string,

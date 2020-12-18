@@ -77,11 +77,6 @@ hr {
     padding: 0 12px!important;
 }
 
-.MuiDialog-paper {
-    width: 90vw;
-    max-width: 800px!important;
-}
-
 .MuiTypography-h6 {
     font-weight: bold!important;
     font-size: 1.5rem!important;
