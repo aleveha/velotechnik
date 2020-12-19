@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import PhotosAutoPlay from "../common/Gallery";
 import {Rating} from "@material-ui/lab";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 interface IInfoBlock {
     label: string,
@@ -100,24 +101,28 @@ const StartPage = () => {
             <Divider/>
             <div className="takeAwayService">
                 <div className="photoContainer takeAway">
-                    <img src={takeAway} alt="takeAwayPhoto"/>
+                    <LazyLoadImage
+                        src={takeAway}
+                        alt="takeAwayPhoto"
+                        effect="blur"
+                    />
                     <div>
                         <h1 className="label">
                             НЕ ПОЛУЧАЕТСЯ ПРИЕХАТЬ К НАМ? <br/> НЕ БЕДА! МЫ ПРИЕДЕМ К ВАМ САМИ!
                         </h1>
                         <p>
-                            УКАЖИТЕ АДРЕС И ТЕЛЕФОН, И В БЛИЖАЙШЕЕ ВРЕМЯ С ВАМИ СВЯЖЕТСЯ НАШ ВЫЕЗДНОЙ МАСТЕР
+                            ДЛЯ ЗАПИСИ СВЯЖИТЕСЬ С НАШИМ ВЫЕДНЫМ МАСТЕРОМ
                         </p>
                     </div>
                     <TakeAwayButton/>
                 </div>
             </div>
             <Divider/>
-            <PhotosAutoPlay/>
+            <PhotosAutoPlay />
             <Divider/>
             <div className="reviews">
                 {Reviews.map((review, index) =>
-                    <div key={index}>
+                    <div key={index} className="reviewContainer">
                         <ReviewBlock
                             score={review.score}
                             name={review.name}

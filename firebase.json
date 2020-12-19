@@ -1,7 +1,6 @@
 {
   "hosting": {
-    "site": "velotechnik24",
-    "public": "public",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",

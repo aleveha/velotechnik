@@ -2,6 +2,8 @@ import {autoPlay} from "react-swipeable-views-utils";
 import SwipeableViews from "react-swipeable-views";
 import React, {ChangeEvent, useState} from "react";
 import Pagination from "@material-ui/lab/Pagination";
+import {LazyLoadImage} from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -42,9 +44,12 @@ const PhotosAutoPlay = () => {
                 className="images"
             >
                 {Images.map(image =>
-                    <div key={image.id}>
-                        <img src={image.path} alt="galleryPhoto"/>
-                    </div>
+                    <LazyLoadImage
+                        key={image.id}
+                        src={image.path}
+                        alt="galleryPhoto"
+                        effect="blur"
+                    />
                 )}
             </AutoPlaySwipeableViews>
             <Pagination

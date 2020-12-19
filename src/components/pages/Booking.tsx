@@ -263,10 +263,19 @@ const BookingForm = () => {
                         </div>
                         <MuiThemeProvider theme={defaultMaterialTheme}>
                             <div className="bookingField">
-                                <Field name="date" component={DatePickerField} locale={locale}/>
+                                <Field
+                                    name="date"
+                                    component={DatePickerField}
+                                    locale={locale}
+                                    handleFirstValidation={handleFirstValidation}
+                                />
                             </div>
                             <div className="bookingField">
-                                <Field name="date" component={TimePickerField}/>
+                                <Field
+                                    name="date"
+                                    component={TimePickerField}
+                                    handleFirstValidation={handleFirstValidation}
+                                />
                             </div>
                         </MuiThemeProvider>
                     </div>
@@ -283,7 +292,7 @@ const BookingForm = () => {
     );
 };
 
-const DatePickerField = (props: FieldProps & TextFieldProps & { locale: string }) => {
+const DatePickerField = (props: FieldProps & TextFieldProps & { locale: string, handleFirstValidation: () => void }) => {
     const {field, form, locale} = props;
     return (
         <MuiPickersUtilsProvider
@@ -297,14 +306,17 @@ const DatePickerField = (props: FieldProps & TextFieldProps & { locale: string }
                 format="dd.MM.yyyy"
                 inputVariant="outlined"
                 value={field.value}
-                onChange={date => form.setFieldValue(field.name, date, true)}
+                onChange={date => {
+                    form.setFieldValue(field.name, date, true);
+                    props.handleFirstValidation();
+                }}
                 disablePast
             />
         </MuiPickersUtilsProvider>
     );
 }
 
-const TimePickerField = (props: FieldProps & TextFieldProps) => {
+const TimePickerField = (props: FieldProps & TextFieldProps & { handleFirstValidation: () => void }) => {
     const {field, form} = props;
     return (
         <MuiPickersUtilsProvider
@@ -319,7 +331,10 @@ const TimePickerField = (props: FieldProps & TextFieldProps) => {
                 ampm={false}
                 minutesStep={10}
                 value={field.value}
-                onChange={date => form.setFieldValue(field.name, date, true)}
+                onChange={date => {
+                    form.setFieldValue(field.name, date, true);
+                    props.handleFirstValidation();
+                }}
                 helperText={form.errors.date}
                 error={!!form.errors.date}
             />
