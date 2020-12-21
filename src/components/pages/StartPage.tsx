@@ -1,4 +1,5 @@
 import React, {useRef, useState} from 'react';
+import mainPhoto from "../../img/main-min.jpeg";
 import avatar from '../../img/avatar.jpg';
 import avatarFemale from '../../img/avatarFemale.png';
 import takeAway from '../../img/takeAway3.jpeg';
@@ -78,7 +79,8 @@ const StartPage = () => {
     return (
         <div className="startPage">
             <div className="mainPhoto photoContainer">
-                <h1>ГЛАВНЫЙ ЗАГОЛОВОК</h1>
+                <img src={mainPhoto} alt="mainPhoto" />
+                <h1>БЫСТРЫЙ И КАЧЕСТВЕННЫЙ<br />СЕРВИС РЯДОМ С&nbsp;ДОМОМ</h1>
                 <div id="learnMore">
                     <MyButton
                         content="УЗНАТЬ БОЛЬШЕ"

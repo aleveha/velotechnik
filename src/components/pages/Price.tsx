@@ -4,7 +4,7 @@ import {
     Card,
     CardActionArea,
     CardContent,
-    CardMedia,
+    CardMedia, Collapse,
     Dialog, DialogActions,
     DialogTitle, Divider,
     List,
@@ -12,17 +12,23 @@ import {
     makeStyles
 } from "@material-ui/core";
 import '../../css/pages/priceList.css';
+import {ExpandLess, ExpandMore} from "@material-ui/icons";
+
+interface ICategoryGroup {
+    label: string,
+    group: IElemPrice[]
+}
 
 interface IElemPrice {
     name: string,
-    price: number
+    price: string
 }
 
 interface ICategory {
     name: string,
     image: { id: number, path: string },
     desc?: string,
-    priceList: IElemPrice[]
+    priceList: ICategoryGroup[]
 }
 
 const useStyles = makeStyles({
@@ -82,17 +88,89 @@ const Categories: ICategory[] = [
         },
         desc: "",
         priceList: [
-            {name: "ПРИМЕР", price: 500}
+            {
+                label: "ОБЩЕЕ",
+                group: [
+                    {
+                        name: "Выпрессовка подшипников подвески",
+                        price: "за шт 250"
+                    },
+                    {
+                        name: "Сварка рамы (сталь)",
+                        price: "от 300"
+                    },
+                    {
+                        name: "Сварка рамы (алюминий)",
+                        price: "от 350"
+                    },
+                    {
+                        name: "Покраска порошковой краской",
+                        price: "от 1500"
+                    },
+                ]
+            },
+            {
+                label: "ТЕХНИЧЕСКОЕ ОБСЛУЖИВАНИЕ",
+                group: [
+                    {
+                        name: "TO1",
+                        price: "1590"
+                    },
+                    {
+                        name: "TO2",
+                        price: "2790"
+                    },
+                    {
+                        name: "TO3 (двухподвесы с многошарнирной подвеской)",
+                        price: "5650"
+                    },
+                    {
+                        name: "Мойка велосипеда (входит в цену любого ТО)",
+                        price: "490"
+                    },
+                ]
+            }
         ]
     },
     {
-        name: "ВИЛКА",
+        name: "АМОРТИЗАТОРЫ",
         image: {
             id: Images[1].id,
             path: Images[1].path
         },
         desc: "",
-        priceList: []
+        priceList: [
+            {
+                label: "ОБЩЕЕ",
+                group: [
+                    {
+                        name: "Установка/замена + все регулировки (тормоз, оплетка, колесо)",
+                        price: "690"
+                    },
+                    {
+                        name: "Укорачивание штока под размер",
+                        price: "390"
+                    }
+                ]
+            },
+            {
+                label: "ТЕХНИЧЕСКОЕ ОБСЛУЖИВАНИЕ",
+                group: [
+                    {
+                        name: "ТО эластомерной вилки",
+                        price: "от 890"
+                    },
+                    {
+                        name: "ТО масляной вилки",
+                        price: "от 1500 до 4000"
+                    },
+                    {
+                        name: "ТО амортизатора",
+                        price: "от 1500 до 4000"
+                    }
+                ]
+            }
+        ]
     },
     {
         name: "КОЛЁСА",
@@ -101,16 +179,66 @@ const Categories: ICategory[] = [
             path: Images[2].path
         },
         desc: "",
-        priceList: []
-    },
-    {
-        name: "АМОРТИЗАТОР",
-        image: {
-            id: Images[3].id,
-            path: Images[3].path
-        },
-        desc: "",
-        priceList: []
+        priceList: [
+            {
+                label: "ПОКРЫШКИ И КАМЕРЫ",
+                group: [
+                    {
+                        name: "Установка/замена камеры или покрышки, перебортирование колеса",
+                        price: "250"
+                    }
+                ]
+            },
+            {
+                label: "ОБОДА, ВТУЛКИ И СПИЦЫ",
+                group: [
+                    {
+                        name: "Сборка/переспицовка колеса",
+                        price: "1200"
+                    },
+                    {
+                        name: "Установка/замена спицы/ниппеля (переднее колесо)",
+                        price: "490"
+                    },
+                    {
+                        name: "Установка/замена спицы/ниппеля (заднее колесо)",
+                        price: "590"
+                    },
+                    {
+                        name: "Центровка колеса/протяжка",
+                        price: "350"
+                    },
+                    {
+                        name: "Правка колеса простая: восьмерка до 5мм",
+                        price: "350"
+                    },
+                    {
+                        name: "Правка колеса сложная: восьмерка от 5мм",
+                        price: "490"
+                    },
+                    {
+                        name: "Переборка втулки переднего колеса со смазкой",
+                        price: "390"
+                    },
+                    {
+                        name: "Переборка втулки заднего колеса со смазкой",
+                        price: "600"
+                    },
+                    {
+                        name: "Переборка односкоростной дорожной втулки (с ножным тормозом)",
+                        price: "790"
+                    },
+                    {
+                        name: "Устранение люфта втулки переднего колеса",
+                        price: "150"
+                    },
+                    {
+                        name: "устранение люфта втулки заднего колеса",
+                        price: "150"
+                    }
+                ]
+            }
+        ]
     },
     {
         name: "ТРАНСМИССИЯ",
@@ -119,7 +247,116 @@ const Categories: ICategory[] = [
             path: Images[4].path
         },
         desc: "",
-        priceList: []
+        priceList: [
+            {
+                label: "КАРЕТКИ",
+                group: [
+                    {
+                        name: "Установка/замена каретки",
+                        price: "600"
+                    },
+                    {
+                        name: "Ремонт каретки обычной",
+                        price: "690"
+                    },
+                    {
+                        name: "Торцевание кареточного стакана рамы",
+                        price: "от 1800"
+                    },
+                    {
+                        name: "Обновление/восстановление резьбы в каретке",
+                        price: "от 1800"
+                    },
+                    {
+                        name: "Замена каретки PRESS FIT (выпрессовка)",
+                        price: "1350"
+                    },
+                    {
+                        name: "Устранение люфта разборной каретки",
+                        price: "390"
+                    }
+                ]
+            },
+            {
+                label: "ШАТУНЫ И ПЕДАЛИ",
+                group: [
+                    {
+                        name: "Установка/замена системы шатунов",
+                        price: "390"
+                    },
+                    {
+                        name: "Обновление/восстановление резьбы в шатунах",
+                        price: "790"
+                    },
+                    {
+                        name: "Установка/замена педалей",
+                        price: "150"
+                    }
+                ]
+            },
+            {
+                label: "ВЕДУЩИЕ ЗВЁЗДЫ, КАССЕТЫ, ТРЕЩЁТКИ И ЦЕПИ",
+                group: [
+                    {
+                        name: "Установка/замена ведущей звездочки/рокринга в системе",
+                        price: "250"
+                    },
+                    {
+                        name: "Установка/замена трещетки/кассеты",
+                        price: "390"
+                    },
+                    {
+                        name: "Установка/замена цепи",
+                        price: "390"
+                    },
+                    {
+                        name: "Смазка цепи без промывки",
+                        price: "150"
+                    },
+                    {
+                        name: "Промывка и смазка трансмиссии",
+                        price: "690"
+                    }
+                ]
+            },
+            {
+                label: "ПЕРЕКЛЮЧАТЕЛИ И МАНЕТКИ",
+                group: [
+                    {
+                        name: "Замена роликов заднего переключателя",
+                        price: "200"
+                    },
+                    {
+                        name: "Установка/замена троса/рубашки + настройка",
+                        price: "450"
+                    },
+                    {
+                        name: "Настройка переднего переключателя",
+                        price: "350"
+                    },
+                    {
+                        name: "Настройка заднего переключателя",
+                        price: "350"
+                    },
+                    {
+                        name: "Установка/замена манетки + настройка",
+                        price: "450"
+                    },
+                    {
+                        name: "Замена петуха",
+                        price: "190"
+                    },
+                    {
+                        name: "Правка петуха",
+                        price: "390"
+                    },
+                    {
+                        name: "Правка перьев (дропаутов)",
+                        price: "от 690"
+                    }
+                ]
+            }
+        ]
     },
     {
         name: "УПРАВЛЕНИЕ",
@@ -128,7 +365,71 @@ const Categories: ICategory[] = [
             path: Images[5].path
         },
         desc: "",
-        priceList: []
+        priceList: [
+            {
+                label: "РУЛЬ",
+                group: [
+                    {
+                        name: "Укорачивание до требуемой ширины",
+                        price: "390"
+                    },
+                    {
+                        name: "Установка/замена",
+                        price: "490"
+                    },
+                    {
+                        name: "Установка/замена ручек руля (грипс)",
+                        price: "150"
+                    }
+                ]
+            },
+            {
+                label: "ВЫНОС",
+                group: [
+                    {
+                        name: "Замена",
+                        price: "290"
+                    },
+                    {
+                        name: "Снятие/установка проставочных колец",
+                        price: "150"
+                    }
+                ]
+            },
+            {
+                label: "РУЛЕВАЯ КОЛОНКА",
+                group: [
+                    {
+                        name: "Ремонт, техобслуживание, смазка",
+                        price: "490"
+                    },
+                    {
+                        name: "Устранение люфта",
+                        price: "150"
+                    },
+                    {
+                        name: "Снятие рулевой колонки",
+                        price: "590"
+                    },
+                    {
+                        name: "Установка рулевой колонки",
+                        price: "590"
+                    },
+                    {
+                        name: "Снятие одноразового якоря",
+                        price: "350"
+                    },
+                    {
+                        name: "Установка якоря",
+                        price: "300"
+                    },
+                    {
+                        name: "Замена крышки якоря",
+                        price: "100"
+                    }
+                ]
+            }
+        ]
     },
     {
         name: "ТОРМОЗА",
@@ -137,7 +438,104 @@ const Categories: ICategory[] = [
             path: Images[6].path
         },
         desc: "",
-        priceList: []
+        priceList: [
+            {
+                label: "ОБЩЕЕ",
+                group: [
+                    {
+                        name: "Установка, снятие или замена диска",
+                        price: "350"
+                    },
+                    {
+                        name: "Обновление/восстановление резьбы в посадочных местах",
+                        price: "от 690 до 1500"
+                    },
+                    {
+                        name: "Правка тормозного диска",
+                        price: "290"
+                    }
+                ]
+            },
+            {
+                label: "ОБОДНЫЕ",
+                group: [
+                    {
+                        name: "Замена тормоза в сборе",
+                        price: "490"
+                    },
+                    {
+                        name: "Замена колодок + регулировка",
+                        price: "390"
+                    },
+                    {
+                        name: "Замена троса или оплетки вместе с настройкой",
+                        price: "490"
+                    }
+                ]
+            },
+            {
+                label: "ДИСКОВЫЕ МЕХАНИЧЕСКИЕ",
+                group: [
+                    {
+                        name: "Замена тормоза в сборе",
+                        price: "590"
+                    },
+                    {
+                        name: "Замена колодок + регулировка",
+                        price: "450"
+                    },
+                    {
+                        name: "Замена тормозного суппорта",
+                        price: "450"
+                    },
+                    {
+                        name: "Замена ручки",
+                        price: "250"
+                    },
+                    {
+                        name: "Настройка тормозного суппорта",
+                        price: "350"
+                    },
+                    {
+                        name: "Замена троса или оплетки вместе с настройкой",
+                        price: "490"
+                    }
+                ]
+            },
+            {
+                label: "ДИСКОВЫЕ ГИДРАВЛИЧЕСКИЕ",
+                group: [
+                    {
+                        name: "Замена тормоза в сборе",
+                        price: "590"
+                    },
+                    {
+                        name: "Замена колодок + регулировка",
+                        price: "450"
+                    },
+                    {
+                        name: "Замена тормозного суппорта",
+                        price: "450"
+                    },
+                    {
+                        name: "Замена ручки + прокачка",
+                        price: "640"
+                    },
+                    {
+                        name: "Замена гидролинии, подгонка длины",
+                        price: "490"
+                    },
+                    {
+                        name: "Настройка тормозного суппорта",
+                        price: "350"
+                    },
+                    {
+                        name: "Прокачка",
+                        price: "390"
+                    }
+                ]
+            }
+        ]
     },
     {
         name: "ПОСАДКА",
@@ -146,7 +544,144 @@ const Categories: ICategory[] = [
             path: Images[7].path
         },
         desc: "",
-        priceList: []
+        priceList: [
+            {
+                label: "ОБЩЕЕ",
+                group: [
+                    {
+                        name: "Установка/замена седла",
+                        price: "250"
+                    },
+                    {
+                        name: "Укорачивание подседельного штыря до требуемой длины",
+                        price: "350"
+                    },
+                    {
+                        name: "ТО подсидельного штыря гидро/пневмо",
+                        price: "от 1800"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        name: "ДРУГОЕ",
+        image: {
+            id: Images[8].id,
+            path: Images[8].path
+        },
+        desc: "",
+        priceList: [
+            {
+                label: "САМОКАТЫ",
+                group: [
+                    {
+                        name: "Замена подшипников в колесе",
+                        price: "150"
+                    },
+                    {
+                        name: "Переборка рулевой колонки",
+                        price: "390"
+                    },
+                    {
+                        name: "Сварка",
+                        price: "от 300"
+                    },
+                    {
+                        name: "Замена вилки",
+                        price: "450"
+                    }
+                ]
+            },
+            {
+                label: "БЕГОВЫЕ ЛЫЖИ",
+                group: [
+                    {
+                        name: "Установка креплений",
+                        price: "600"
+                    },
+                    {
+                        name: "Демонтаж креплений",
+                        price: "250"
+                    },
+                    {
+                        name: "Сверление отверстий под крепление",
+                        price: "250"
+                    },
+                    {
+                        name: "Заливка старых отверстий",
+                        price: "200"
+                    },
+                    {
+                        name: "Залив трещин скользящей поверхности",
+                        price: "390"
+                    }
+                ]
+            },
+            {
+                label: "ГОРНЫЕ ЛЫЖИ",
+                group: [
+                    {
+                        name: "Заточка канта",
+                        price: "450"
+                    },
+                    {
+                        name: "Установка креплений",
+                        price: "750"
+                    },
+                    {
+                        name: "Демонтаж креплений с заделкой отверстий",
+                        price: "200"
+                    },
+                    {
+                        name: "Ремонт расслоения скользяка + ремонт канта + залив граней",
+                        price: "от 350"
+                    }
+                ]
+            },
+            {
+                label: "СНОУБОРДЫ",
+                group: [
+                    {
+                        name: "Заточка канта",
+                        price: "450"
+                    },
+                    {
+                        name: "Парафин",
+                        price: "650"
+                    },
+                    {
+                        name: "Залив трещин скользящей поверхности",
+                        price: "390"
+                    },
+                    {
+                        name: "Установка креплений",
+                        price: "390"
+                    },
+                    {
+                        name: "Ремонт расслоения скользяка + ремонт канта + залив граней",
+                        price: "от 350"
+                    }
+                ]
+            },
+            {
+                label: "КОНЬКИ",
+                group: [
+                    {
+                        name: "Заточка коньков",
+                        price: "250"
+                    },
+                    {
+                        name: "Ремонт ботинка",
+                        price: "от 200"
+                    },
+                    {
+                        name: "Замена шнурков (без учёта цены шнурков)",
+                        price: "150"
+                    }
+                ]
+            }
+        ]
     }
 ];
 
@@ -168,13 +703,31 @@ const Price = () => {
     );
 };
 
-const ElementPrice = (props: IElemPrice) => {
+const Groups = (props: ICategoryGroup) => {
+    const [open, setOpen] = useState<boolean>(false);
     const classes = useStyles();
+
+    const handleOpen = () => {
+        setOpen(!open);
+    }
+
     return (
-        <ListItem className={classes.listElement}>
-            <p className="dialogPar">{props.name}</p>
-            <p className="dialogPar">{props.price} р.</p>
-        </ListItem>
+        <div>
+            <ListItem className={classes.listElement} button onClick={handleOpen}>
+                <h5>{props.label}</h5>
+                {open ? <ExpandLess/> : <ExpandMore/>}
+            </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+                <List>
+                    {props.group.map(groupItem =>
+                        <ListItem className={classes.listElement} key={props.label}>
+                            <p className="dialogPar">{groupItem.name}</p>
+                            <p className="dialogPar">{groupItem.price}р.</p>
+                        </ListItem>
+                    )}
+                </List>
+            </Collapse>
+        </div>
     );
 }
 
@@ -229,10 +782,10 @@ const Category = (props: ICategory) => {
                 </DialogTitle>
                 <List>
                     {props.priceList.map(elem =>
-                        <ElementPrice key={elem.name} name={elem.name} price={elem.price}/>
+                        <Groups key={elem.label} label={elem.label} group={elem.group}/>
                     )}
                 </List>
-                <Divider />
+                <Divider/>
                 <DialogActions>
                     <Button
                         variant="contained"
