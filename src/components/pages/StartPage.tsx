@@ -116,7 +116,7 @@ const StartPage = () => {
                             НЕ ПОЛУЧАЕТСЯ ПРИЕХАТЬ К НАМ? <br/> НЕ БЕДА! МЫ ПРИЕДЕМ К ВАМ САМИ!
                         </h1>
                         <p>
-                            ДЛЯ ЗАПИСИ СВЯЖИТЕСЬ С НАШИМ ВЫЕДНЫМ МАСТЕРОМ
+                            ДЛЯ ЗАПИСИ СВЯЖИТЕСЬ С НАШИМ ВЫЕЗДНЫМ МАСТЕРОМ
                         </p>
                     </div>
                     <TakeAwayButton/>
@@ -183,7 +183,7 @@ const TakeAwayButton = () => {
                 </DialogTitle>
                 <DialogContent className={classes.dialogContent}>
                     <h5>
-                        ДЛЯ ЗАПИСИ СВЯЖИТЕСЬ, ПОЖАЛУЙСТА, С НАШИМ МАСТРЕОМ
+                        ДЛЯ ЗАПИСИ СВЯЖИТЕСЬ, ПОЖАЛУЙСТА, С НАШИМ МАСТЕРОМ
                     </h5>
                     <div className={classes.contact}>
                         <p>ТЕЛЕФОН:</p>
