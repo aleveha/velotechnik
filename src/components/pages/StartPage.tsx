@@ -66,6 +66,9 @@ const Reviews: IReviewBlock[] = [
     }
 ]
 
+const mainPhotoVH = window.innerHeight;
+document.documentElement.style.setProperty('--mainPhotoVH', `${mainPhotoVH}px`);
+
 const StartPage = () => {
     const mainInfoRef = useRef<HTMLInputElement>(null);
     const onButtonClick = () => {

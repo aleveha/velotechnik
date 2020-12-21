@@ -1,14 +1,15 @@
 /*-----1-----*/
 .mainPhoto {
     /*height: calc(100vh - 5rem);*/
-    height: calc(calc(var(--vh) * 100) - 5rem);
+    /*height: calc(calc(var(--vh) * 100) - 5rem);*/
+    height: calc(var(--mainPhotoVH) - 5rem);
     /*background-image: url("../../img/main-min.jpeg");*/
     /*background-size: cover;*/
 }
 
 .mainPhoto img {
     filter: brightness(40%);
-    height: 100%;
+    max-height: var(--mainPhotoVH);
     object-fit: cover;
 }
 
