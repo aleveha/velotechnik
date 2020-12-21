@@ -50,7 +50,7 @@
     bottom: 20px;
 }
 
-@media (min-width: 565px) {
+@media (min-width: 855px) {
     .mainPhoto img {
         width: 100%;
     }

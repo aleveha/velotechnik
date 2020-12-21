@@ -23,12 +23,12 @@ const Footer = () => {
                     nameWhite={InstagramWhite}
                     nameColor={InstagramWhite}
                     svgColor="#F521B8"
-                    href="https://www.instagram.com/velotechnik24/"
+                    href="https://www.instagram.com/velo.technik24/"
                 />
                 <SocialMediaIcon
                     nameWhite={VKWhite}
                     nameColor={VKColor}
-                    href="https://vk.com/velotechnik896"
+                    href="https://vk.com/velotechnik"
                 />
                 <SocialMediaIcon
                     nameWhite={WhatsAppWhite}
