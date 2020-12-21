@@ -48,6 +48,10 @@ interface IService {
     district: string,
     phoneNumber: string,
     email: string,
+    workingHours: {
+        from: string,
+        to: string
+    }
     coordinates: number[]
 }
 
@@ -64,6 +68,10 @@ export const Services: IService[] = [
         district: "Беляево",
         phoneNumber: "+79164959496",
         email: "velotechnik24@gmail.com",
+        workingHours: {
+            from: "11:00",
+            to: "21:00"
+        },
         coordinates: [55.647055, 37.512607]
     },
     {
@@ -73,6 +81,10 @@ export const Services: IService[] = [
         district: "Южное Бутово",
         phoneNumber: "+79856643619",
         email: "velotechnik24@gmail.com",
+        workingHours: {
+            from: "11:00",
+            to: "21:00"
+        },
         coordinates: [55.533333, 37.530687]
     }
 ];

@@ -26,6 +26,10 @@ const Contacts = () => {
                             </a>
                         </div>
                         <div>
+                            <h3>ВРЕМЯ РАБОТЫ</h3>
+                            <p>c {service.workingHours.from} до {service.workingHours.to}</p>
+                        </div>
+                        <div>
                             <h3>ТЕЛЕФОН</h3>
                             <a
                                 href={`tel:${service.phoneNumber}`}
