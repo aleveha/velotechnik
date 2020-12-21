@@ -1,5 +1,6 @@
 .App {
-    height: 100vh;
+    /*min-height: 100vh;*/
+    min-height: calc(var(--vh) * 100);
     display: grid;
     grid-template-rows: auto 1fr auto;
     grid-template-areas:
@@ -80,7 +81,8 @@
 
 .tab {
     color: var(--secondText);
-    font-size: 3vh;
+    /*font-size: 3vh;*/
+    font-size: calc(var(--vh) * 3);
     margin: 1rem 0;
 }
 
@@ -158,6 +160,7 @@
     }
 
     .socialIcon {
-        width: 8vh;
+        /*width: 8vh;*/
+        width: calc(var(--vh) * 8);
     }
 }

@@ -88,4 +88,6 @@ hr {
     --buttonHoverBG: #CE3B3B;
     --mainText: #000;
     --secondText: #fff;
+
+    --vh: 1vh;
 }

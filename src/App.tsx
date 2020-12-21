@@ -8,6 +8,14 @@ import Booking from './components/pages/Booking';
 import Contacts from "./components/pages/Contacts";
 import Price from "./components/pages/Price";
 
+const vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+window.addEventListener('resize', () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
 function App() {
     return (
         <div className="App">

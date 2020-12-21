@@ -1,6 +1,7 @@
 /*-----1-----*/
 .mainPhoto {
-    height: calc(100vh - 5rem);
+    /*height: calc(100vh - 5rem);*/
+    height: calc(calc(var(--vh) * 100) - 5rem);
     /*background-image: url("../../img/main-min.jpeg");*/
     /*background-size: cover;*/
 }
@@ -13,7 +14,8 @@
 
 .photoContainer {
     position: relative;
-    max-height: 95vh;
+    /*max-height: 95vh;*/
+    max-height: calc(var(--vh) * 95);
     max-width: 100vw;
     overflow: hidden;
     display: flex;
@@ -33,7 +35,8 @@
     position: absolute;
     top: 6vw;
     margin: 0;
-    font-size: 6vh;
+    /*font-size: 6vh;*/
+    font-size: calc(var(--vh) * 6);
 }
 
 .photoContainer > #learnMore {
@@ -59,9 +62,16 @@
     }
 }
 
+@media (max-width: 320px) {
+    .photoContainer > h1 {
+        font-size: 1.35em;
+    }
+}
+
 /*-----2-----*/
 .mainInfo {
-    min-height: 100vh;
+    /*min-height: 100vh;*/
+    min-height: calc(var(--vh) * 100);
     color: black;
     display: flex;
     flex-wrap: wrap;
@@ -77,15 +87,18 @@
 }
 
 .infoBlock h2 {
-    font-size: 5vh;
+    font-size: calc(var(--vh) * 5);
+    /*font-size: 5vh;*/
 }
 
 .infoBlock h1 {
-    font-size: 8vh;
+    font-size: calc(var(--vh) * 8);
+    /*font-size: 8vh;*/
 }
 
 .infoBlock p {
-    font-size: 3vh;
+    font-size: calc(var(--vh) * 3);
+    /*font-size: 3vh;*/
 }
 
 @media (max-width: 1025px) {
@@ -98,7 +111,7 @@
     }
 
     .infoBlock p {
-        font-size: 0.6em;
+        font-size: 0.7em;
     }
 }
 
@@ -110,7 +123,8 @@
 
 /*-----3-----*/
 .takeAwayService {
-    margin: 5vh 0;
+    /*margin: 5vh 0;*/
+    margin: calc(var(--vh) * 5) 0;
 }
 
 .takeAwayService .takeAway {
@@ -124,12 +138,14 @@
 }
 
 .takeAway p {
-    font-size: 2.5vh;
+    /*font-size: 2.5vh;*/
+    font-size: calc(var(--vh) * 2.5);
     margin: 1rem;
 }
 
 .takeAway h1 {
-    font-size: 4vh;
+    /*font-size: 4vh;*/
+    font-size: calc(var(--vh) * 4);
     margin: 1rem;
 }
 
@@ -187,7 +203,8 @@
 /*-----5-----*/
 .reviews {
     color: black;
-    min-height: 100vh;
+    /*min-height: 100vh;*/
+    min-height: calc(var(--vh) * 100);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -229,8 +246,10 @@
 }
 
 .avatar {
-    height: 10vh!important;
-    width: 10vh!important;
+    height: calc(var(--vh) * 10)!important;
+    /*height: 10vh!important;*/
+    width: calc(var(--vh) * 10)!important;
+    /*width: 10vh!important;*/
 }
 
 @media (max-width: 1025px) {
