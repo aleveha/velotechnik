@@ -259,3 +259,52 @@
         display: block;
     }
 }
+
+/*-----6-----*/
+.info {
+    color: black;
+    padding: 1em 1rem;
+}
+
+.info > div {
+    margin-top: 2rem;
+}
+
+.info p {
+    margin: 1rem;
+}
+
+.info h2 {
+    font-size: calc(var(--vh) * 4);
+    /*font-size: 5vh;*/
+}
+
+.info h1 {
+    font-size: calc(var(--vh) * 5);
+    /*font-size: 8vh;*/
+}
+
+.info p {
+    font-size: calc(var(--vh) * 4);
+    /*font-size: 3vh;*/
+}
+
+@media (max-width: 1025px) {
+    .info h2 {
+        font-size: 0.7em;
+    }
+
+    .info h1 {
+        font-size: 1em;
+    }
+
+    .info p {
+        font-size: 0.7em;
+    }
+}
+
+@media (max-width: 335px) {
+    .info {
+        min-width: 240px;
+    }
+}

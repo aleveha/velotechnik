@@ -18,6 +18,7 @@ import {
 import PhotosAutoPlay from "../common/Gallery";
 import {Rating} from "@material-ui/lab";
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import {Link} from 'react-router-dom';
 
 interface IInfoBlock {
     label: string,
@@ -82,8 +83,8 @@ const StartPage = () => {
     return (
         <div className="startPage">
             <div className="mainPhoto photoContainer">
-                <img src={mainPhoto} alt="mainPhoto" />
-                <h1>БЫСТРЫЙ И КАЧЕСТВЕННЫЙ<br />СЕРВИС РЯДОМ С&nbsp;ДОМОМ</h1>
+                <img src={mainPhoto} alt="mainPhoto"/>
+                <h1>БЫСТРЫЙ И КАЧЕСТВЕННЫЙ<br/>СЕРВИС РЯДОМ С&nbsp;ДОМОМ</h1>
                 <div id="learnMore">
                     <MyButton
                         content="УЗНАТЬ БОЛЬШЕ"
@@ -123,8 +124,31 @@ const StartPage = () => {
                 </div>
             </div>
             <Divider/>
-            <PhotosAutoPlay />
+            <div className="info">
+                <h1>МЫ ЗАНИМАЕМСЯ РЕМОНТОМ, СБОРКОЙ И ВОССТАНОВЛЕНИЕМ СПОРТИВНОГО ОБОРУДОВАНИЯ:</h1>
+                <p>ВЕЛОСИПЕДЫ</p>
+                <p>ЭЛЕКТРОСАМОКАТЫ</p>
+                <p>СНОУБОРДЫ</p>
+                <p>ЛЫЖИ</p>
+                <p>КОНЬКИ</p>
+                <h2>ПОДРОБНЫЙ СПИСОК ОБОРУДОВАНИЯ И ЦЕН ВЫ СМОЖЕТЕ НАЙТИ В РАЗДЕЛЕ "УСЛУГИ"</h2>
+                <div>
+                    <Link to="/services">
+                        <MyButton content="ПОДРОБНЕЕ" icon={<ArrowForwardIosIcon/>} />
+                    </Link>
+                </div>
+            </div>
             <Divider/>
+            <PhotosAutoPlay/>
+            <Divider/>
+            <div className="info">
+                <h1>ТАКЖЕ МЫ ЗАНИМАЕМСЯ ОБУЧЕНИЕМ ПО ОБСЛУЖИВАНИЮ И&nbsp;РЕМОНТУ:</h1>
+                <p>ВЕЛОСИПЕДОВ И ИХ КОМПОНЕНТОВ</p>
+                <p>СНОУБОРДОВ</p>
+                <p>ЛЫЖ</p>
+                <h2>ПОДРОБНАЯ ИНФОРМАЦИЯ О ДАТЕ И МЕСТЕ ПРОВЕДЕНИЯ ОБУЧЕНИЯ ПУБЛИКУЕТСЯ В НАШИХ СОЦИАЛЬНЫХ СЕТЯХ</h2>
+            </div>
+            <Divider />
             <div className="reviews">
                 {Reviews.map((review, index) =>
                     <div key={index} className="reviewContainer">
